@@ -1,0 +1,17 @@
+.cir__flashy {
+  animation: 2.5s flashy infinite linear;
+}
+
+.cir__pub-card {
+  animation: 1.5s fade-in linear;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0 };
+  100% { opacity: 1 };
+}
+
+@keyframes flashy {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1 }
+}
