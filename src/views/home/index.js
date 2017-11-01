@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Jumbotron, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+import CitationWeb from '../../components/citation-web'
 
 import './styles.css'
 
@@ -27,6 +28,7 @@ class Home extends Component {
                 </Button>
               </a>
           </Jumbotron>
+          <CitationWeb title='foo' maxDepth='2' />
         </Container>
       </div>
     )
