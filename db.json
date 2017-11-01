@@ -11634,5 +11634,64 @@
         "Knowledge Base": 128
       }
     ]
+  },
+
+  {
+    "api": {
+        "num_publications_by_year": {
+            2013: 102,
+            2014: 2011,
+            2015: 2011,
+            2016: 1011,
+            2017: 1023
+        },
+        "num_citations_by_year": {
+            2013: 102,
+            2014: 2011,
+            2015: 2011,
+            2016: 1011,
+            2017: 1023
+        },`
+        "top_publications_by_num_citations": {
+            "1": {
+                "title": "ABC",
+                "count": 123
+            },
+            "2": {
+                "title": "BED",
+                "count": 123141
+            },
+            "3": {
+                "title": "BED",
+                "count": 123141
+            },
+            "4": {
+                "title": "BED",
+                "count": 123141
+            },
+            "5": {
+                "title": "BED",
+                "count": 123141
+            }
+        },
+        "top_authors_by_num_publications": {
+            "Rick": 100,
+            "Morty": 200,
+            "Jane": 200,
+            "Mickey": 200,
+            "Mouse": 200,
+            "Donald": 200,
+            "Duck": 200
+        },
+        "authors": [
+            "Rick",
+            "Morty",
+            "Jane",
+            "Mickey",
+            "Mouse",
+            "Donald",
+            "Duck"
+        ]
+    }
   }
 }
