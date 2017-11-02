@@ -28,6 +28,7 @@ const CitationWeb = ({
     return pubIds.map(id => (
       <ForceGraphNode
         key={id}
+        fill={'#EEEEEE'}
         node={{
           id: id,
           radius: radiusScale(data[id].inCitations.length),
