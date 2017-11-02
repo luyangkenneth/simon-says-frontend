@@ -4,6 +4,7 @@ import {
   ForceGraphNode,
   ForceGraphLink
 } from 'react-vis-force'
+import { scaleLinear } from 'd3-scale'
 
 const CitationWeb = ({data}) => {
   const stubData = {
@@ -23,15 +24,19 @@ const CitationWeb = ({data}) => {
 
   const getGraphNodes = data => {
     const pubIds = Object.keys(data)
-    // TODO
-    // size scale
-    // color scale
+
+    const inCitationLength = pubIds.map(id => data[id].inCitations.length)
+
+    const radiusScale = scaleLinear()
+      .domain([Math.min(...inCitationLength), Math.max(...inCitationLength)])
+      .range([10, 20])
+
     return pubIds.map(id => (
       <ForceGraphNode
         key={id}
         node={{
           id: id,
-          radius: 5,
+          radius: radiusScale(data[id].inCitations.length),
           ...data[id]}}
       />
     ))
