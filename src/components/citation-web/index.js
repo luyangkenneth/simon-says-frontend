@@ -37,11 +37,32 @@ const CitationWeb = ({data}) => {
     ))
   }
 
+  const getGraphLinks = data => {
+    return Object.keys(data)
+      .reduce((prev, curr) => (
+        prev.concat(data[curr].inCitations
+          .filter(inCitId => (inCitId in data))
+          .map(inCitId => ({
+            source: inCitId,
+            target: curr,
+            value: 1
+          }))
+          .map(link => (
+            <ForceGraphLink
+              key={`${link.source}->${link.target}`}
+              link={link}
+            />
+          ))
+        )
+      ), [])
+  }
+
   return (
     <div>
       <p>Citation Web</p>
       <InteractiveForceGraph>
         {getGraphNodes(stubData)}
+        {getGraphLinks(stubData)}
       </InteractiveForceGraph>
     </div>
   )
