@@ -63,6 +63,7 @@ class Home extends Component {
             simulationOptions={webSimOpt}
             onSelectNode={showDetails}
             onDeselectNode={showDetails}
+            defaultSelectedNode={{id: '2'}}
             data={stubData}/>
         </Container>
       </div>
