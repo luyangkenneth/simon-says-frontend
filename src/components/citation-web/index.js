@@ -6,7 +6,15 @@ import {
 } from 'react-vis-force'
 import { scaleLinear } from 'd3-scale'
 
-const CitationWeb = ({data}) => {
+const CitationWeb = ({
+  zoom,
+  zoomOptions,
+  highlightDependencies,
+  simulationOptions,
+  onSelectNode,
+  onDeselectNode,
+  data
+}) => {
   const stubData = {
     "1": {
       "title": "Portal gun and its conundrum",
@@ -65,9 +73,16 @@ const CitationWeb = ({data}) => {
   return (
     <div>
       <p>Citation Web</p>
-      <InteractiveForceGraph>
-        {getGraphNodes(stubData)}
-        {getGraphLinks(stubData)}
+      <InteractiveForceGraph
+        zoom={zoom}
+        zoomOptions={zoomOptions}
+        highlightDependencies={highlightDependencies}
+        simulationOptions={simulationOptions}
+        onSelectNode={onSelectNode}
+        onDeselectNode={onDeselectNode}
+        >
+        {getGraphNodes(data)}
+        {getGraphLinks(data)}
       </InteractiveForceGraph>
     </div>
   )
