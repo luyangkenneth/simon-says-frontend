@@ -7,6 +7,35 @@ import './styles.css'
 
 class Home extends Component {
   render() {
+    const stubData = {
+      "1": {
+        "title": "Portal gun and its conundrum",
+        "inCitations": ["2", "3"]
+      },
+      "2": {
+        "title": "Existence of gazorpgazorp",
+        "inCitations": ["3"]
+      },
+      "3": {
+        "title": "Alcoholism",
+        "inCitations": []
+      },
+    }
+
+    const webSimOpt = {
+      height: 500,
+      width: 500,
+      animate: true,
+      strength: {
+        x: -0.001,
+        y: -0.001
+      }
+    }
+
+    const showDetails = (event, node) => {
+      console.log(node)
+    }
+
     return (
       <div>
         <Container>
@@ -28,7 +57,13 @@ class Home extends Component {
                 </Button>
               </a>
           </Jumbotron>
-          <CitationWeb title='foo' maxDepth='2' />
+          <CitationWeb
+            zoom
+            highlightDependencies
+            simulationOptions={webSimOpt}
+            onSelectNode={showDetails}
+            onDeselectNode={showDetails}
+            data={stubData}/>
         </Container>
       </div>
     )

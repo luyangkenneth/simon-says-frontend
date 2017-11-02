@@ -15,21 +15,6 @@ const CitationWeb = ({
   onDeselectNode,
   data
 }) => {
-  const stubData = {
-    "1": {
-      "title": "Portal gun and its conundrum",
-      "inCitations": ["2", "3"]
-    },
-    "2": {
-      "title": "Existence of gazorpgazorp",
-      "inCitations": ["3"]
-    },
-    "3": {
-      "title": "Alcoholism",
-      "inCitations": []
-    },
-  }
-
   const getGraphNodes = data => {
     const pubIds = Object.keys(data)
 
