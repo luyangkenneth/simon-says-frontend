@@ -21,6 +21,10 @@ class Home extends Component {
       },
       "3": {
         "title": "Alcoholism",
+        "inCitations": ["10"]
+      },
+      "10": {
+        "title": "Microverse Batteries",
         "inCitations": []
       },
     }
