@@ -8,6 +8,7 @@ import { scaleLinear } from 'd3-scale'
 import { Container, Row, Col } from 'reactstrap'
 
 import PublicationCard from '../../components/publication-card'
+import CitationWeb from '../../components/citation-web'
 import Loader from '../../components/loader'
 
 import './styles.css'
@@ -23,7 +24,7 @@ import './styles.css'
  * directed graph library by Uber.
  *
  */
-class CitationWeb extends Component {
+class CitationWebView extends Component {
   componentDidMount() {
     const { fetchCitationWeb } = this.props
     fetchCitationWeb()
@@ -46,16 +47,12 @@ class CitationWeb extends Component {
           <Loader loading={loading}>
             <Row className='mb-3'>
               <Col xs={6}>
-                <InteractiveForceGraph
+                <CitationWeb
                   zoom
                   highlightDependencies
                   simulationOptions={simulationOptions}
-                  onSelectNode={this.showPublication.bind(this)}
-                  onDeselectNode={this.hidePublication.bind(this)}
-                >
-                  {this.getGraphNodes(entities)}
-                  {this.getGraphEdges(entities)}
-                </InteractiveForceGraph>
+                  data={entities}
+                / >
               </Col>
               <Col xs={6} className='my-auto'>
                 {Object.keys(selected).length > 0 ?
@@ -158,4 +155,4 @@ class CitationWeb extends Component {
   }
 }
 
-export default CitationWeb
+export default CitationWebView

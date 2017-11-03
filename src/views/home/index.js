@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Jumbotron, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import CitationWeb from '../../components/citation-web'
 
 import Multigraph from '../../components/multigraph'
 import { randomInts } from '../../utils/data-generator'
