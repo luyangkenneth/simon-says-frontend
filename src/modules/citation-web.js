@@ -6,6 +6,7 @@ const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
 const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
+const CHANGE_DEPTH = 'CHANGE_DEPTH'
 
 
 // Reducers
@@ -20,13 +21,13 @@ const publicationSelection = (state = '', action) => {
   }
 }
 
-const initialState = {
+const apiReducerInitialState = {
   entities: {},
   loading: true,
   error: false
 }
 
-const apiReducer = (state = initialState, action) => {
+const apiReducer = (state = apiReducerInitialState, action) => {
   switch (action.type) {
     case FETCH_WEB_REQUEST:
       return {
@@ -52,9 +53,28 @@ const apiReducer = (state = initialState, action) => {
   }
 }
 
+const depthReducerInitialState = {
+  depth: 1
+}
+
+const depthReducer = (state = depthReducerInitialState, action) => {
+  switch (action.type) {
+    case CHANGE_DEPTH:
+      return {
+        ...state,
+        depth: action.payload
+      }
+
+    default:
+      return state
+
+  }
+}
+
 export default combineReducers({
   selected: publicationSelection,
-  apiReducer
+  apiReducer,
+  depthReducer
 })
 
 // Selectors
@@ -82,4 +102,9 @@ export const selectPublication = (publicationId) => ({
 
 export const resetSelectedPublication = () => ({
   type: RESET_SELECTED_PUBLICATION
+})
+
+export const changeDepth = (depth) => ({
+  type: CHANGE_DEPTH,
+  payload: depth
 })

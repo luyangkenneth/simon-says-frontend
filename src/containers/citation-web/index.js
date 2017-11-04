@@ -1,11 +1,12 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import CitationWeb from '../../views/citation-web'
-import { 
+import {
   fetchCitationWeb,
   selectPublication,
   resetSelectedPublication,
-  selectedPublication
+  selectedPublication,
+  changeDepth
 } from '../../modules/citation-web'
 
 const mapStateToProps = state => ({
@@ -13,13 +14,15 @@ const mapStateToProps = state => ({
   error: state.citationWeb.apiReducer.error,
   entities: state.citationWeb.apiReducer.entities,
   selected: selectedPublication(state.citationWeb.apiReducer.entities,
-                                state.citationWeb.selected)
+                                state.citationWeb.selected),
+  depth: state.citationWeb.depthReducer.depth
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchCitationWeb,
   selectPublication,
-  resetSelectedPublication
+  resetSelectedPublication,
+  changeDepth
 }, dispatch)
 
 export default connect(
