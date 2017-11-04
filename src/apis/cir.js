@@ -81,5 +81,13 @@ export const citationWeb = (title) => {
  * Returns the string of the complete API query with parameters.
  */
 function buildUrl (endpoint, params = {}) {
-  return `${BASE_URL}/${endpoint}?${stringify(params)}`
+  // Removes undefined parameters
+  const filtered = Object.keys(params)
+    .filter(id => params[id] !== undefined)
+    .reduce((prev, id) => {
+      prev[id] = params[id]
+      return prev
+    }, {})
+
+  return `${BASE_URL}/${endpoint}?${stringify(filtered)}`
 }
