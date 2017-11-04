@@ -3,17 +3,22 @@ import { connect } from 'react-redux'
 import Trend from '../../views/trend'
 import { fetchTrend, getGraphData } from '../../modules/trend'
 
-const mapStateToProps = state => ({
-  loading: state.trend.loading,
-  error: state.trend.error,
-  series: [getGraphData(state.trend)]
-})
+export default (resource, categoryKey, title) => {
+  const mapStateToProps = state => ({
+    loading: state.trend.loading,
+    error: state.trend.error,
+    categories: getGraphData(state.rank, categoryKey).categories,
+    series: [getGraphData(state.trend, categoryKey).data],
+    resource,
+    title
+  })
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchTrend
-}, dispatch)
+  const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchTrend
+  }, dispatch)
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Trend)
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Trend)
+}
