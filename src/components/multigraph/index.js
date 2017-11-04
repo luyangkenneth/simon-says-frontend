@@ -13,6 +13,14 @@ const Multigraph = ({
   <div>
     <ReactHighcharts
       config={{
+        colors: [
+          '#274C77',
+          '#6096BA',
+          '#ADF7B6',
+          '#FFEE93',
+          '#D9534F',
+          '#FFC09F'
+        ],
         chart: { type: type },
         title: { text: title },
         xAxis: {
