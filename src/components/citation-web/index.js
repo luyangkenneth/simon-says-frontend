@@ -27,6 +27,7 @@ const CitationWeb = ({
         onSelectNode={onSelectNode}
         onDeselectNode={onDeselectNode}
         defaultSelectedNode={defaultSelectedNode || getDefaultNode(data)}
+        showLabels={false}
         >
         {getGraphNodes(data)}
         {getGraphLinks(data)}
