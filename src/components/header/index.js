@@ -26,7 +26,10 @@ const Header = () => (
               <NavLink href="/rank/publications">Top Publications</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/trend">Trends</NavLink>
+              <NavLink href="/trend/publications">Publication Trends</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/trend/citations">Citation Trends</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/web">Citation Web</NavLink>

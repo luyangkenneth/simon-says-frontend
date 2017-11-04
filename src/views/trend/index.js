@@ -19,7 +19,6 @@ class Trend extends Component {
   render() {
     const { series, categories, loading } = this.props
     const labels = ['All Years']
-    console.log(series);
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     return (
