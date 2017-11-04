@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import store, { history } from './store'
 import App from './containers/app'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import registerServiceWorker from './registerServiceWorker'
 
 import './styles/main.css'
@@ -14,7 +15,9 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <App />
+        <MuiThemeProvider>
+          <App />
+        </MuiThemeProvider>
       </div>
     </ConnectedRouter>
   </Provider>,
