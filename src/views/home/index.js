@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Jumbotron, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+import CitationWeb from '../../components/citation-web'
 
 import Multigraph from '../../components/multigraph'
 import { randomInts } from '../../utils/data-generator'
@@ -9,6 +10,39 @@ import './styles.css'
 
 class Home extends Component {
   render() {
+    const stubData = {
+      "1": {
+        "title": "Portal gun and its conundrum",
+        "inCitations": ["2", "3"]
+      },
+      "2": {
+        "title": "Existence of gazorpgazorp",
+        "inCitations": ["3"]
+      },
+      "3": {
+        "title": "Alcoholism",
+        "inCitations": ["10"]
+      },
+      "10": {
+        "title": "Microverse Batteries",
+        "inCitations": []
+      },
+    }
+
+    const webSimOpt = {
+      height: 500,
+      width: 500,
+      animate: true,
+      strength: {
+        x: -0.001,
+        y: -0.001
+      }
+    }
+
+    const showDetails = (event, node) => {
+      console.log(node)
+    }
+
     return (
       <div>
         <Container>
@@ -45,6 +79,14 @@ class Home extends Component {
               { 'name': '2005', data: randomInts(5, 10, 100) }
             ]}
           />
+          <CitationWeb
+            zoom
+            highlightDependencies
+            simulationOptions={webSimOpt}
+            onSelectNode={showDetails}
+            onDeselectNode={showDetails}
+            defaultSelectedNode={{id: '2'}}
+            data={stubData}/>
         </Container>
       </div>
     )
