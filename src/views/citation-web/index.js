@@ -1,10 +1,4 @@
 import React, { Component } from 'react'
-import {
-  InteractiveForceGraph,
-  ForceGraphNode,
-  ForceGraphLink
-} from 'react-vis-force'
-import { scaleLinear } from 'd3-scale'
 import { Container, Row, Col, Button } from 'reactstrap'
 
 import PublicationCard from '../../components/publication-card'
