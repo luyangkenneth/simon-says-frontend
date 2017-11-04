@@ -6,6 +6,14 @@ import {
 } from 'react-vis-force'
 import { scaleLinear } from 'd3-scale'
 
+/**
+ * Renders a citation web. All options are exactly react vis force options
+ * except for defaultSelectedNode.
+ *
+ * defaultSelectedNode: { "id": <idvalue> }
+ * data: object of a subset of publication objects
+ *   i.e. has at most the same key value pairs. The object structure remains
+ */
 const CitationWeb = ({
   zoom,
   zoomOptions,
