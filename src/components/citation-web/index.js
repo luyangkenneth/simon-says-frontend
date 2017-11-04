@@ -28,6 +28,7 @@ const CitationWeb = ({
         onDeselectNode={onDeselectNode}
         defaultSelectedNode={defaultSelectedNode || getDefaultNode(data)}
         showLabels={false}
+        labelAttr={'title'}
         >
         {getGraphNodes(data)}
         {getGraphLinks(data)}
