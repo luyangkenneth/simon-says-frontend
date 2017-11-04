@@ -46,7 +46,7 @@ class CitationWebView extends Component {
         <Container>
           <Loader loading={loading}>
             <Row className='mb-3'>
-              <Col xs={6}>
+              <Col lg={6}>
                 <CitationWeb
                   zoom
                   highlightDependencies
@@ -54,7 +54,7 @@ class CitationWebView extends Component {
                   data={entities}
                 / >
               </Col>
-              <Col xs={6} className='my-auto'>
+              <Col lg={6} className='my-auto'>
                 {Object.keys(selected).length > 0 ?
                   <PublicationCard
                     className='cir__pub-card'
