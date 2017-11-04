@@ -5,7 +5,7 @@ import {
   ForceGraphLink
 } from 'react-vis-force'
 import { scaleLinear } from 'd3-scale'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, Button } from 'reactstrap'
 
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
@@ -31,7 +31,8 @@ class CitationWebView extends Component {
   }
 
   render() {
-    const { entities, selected, loading } = this.props
+    const { entities, selected, loading, depth } = this.props
+    console.log(depth)
     const simulationOptions = {
       height: 500,
       width: 500,
@@ -73,6 +74,14 @@ class CitationWebView extends Component {
                 }
               </Col>
             </Row>
+            <Row className='mb-3'>
+              <Button
+                color='primary'
+                onClick={this.changeDepth.bind(this)}
+              >
+                Change depth
+              </Button>
+            </Row>
           </Loader>
         </Container>
       </div>
@@ -93,6 +102,14 @@ class CitationWebView extends Component {
   hidePublication(event, node) {
     const { resetSelectedPublication } = this.props
     resetSelectedPublication()
+  }
+
+  /**
+   * Change depth of citation web
+   */
+  changeDepth(depth) {
+    const { changeDepth } = this.props
+    changeDepth(depth)
   }
 }
 
