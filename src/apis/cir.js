@@ -1,56 +1,85 @@
-/**
- * Builds the URL with parameters for each API call that we require. All logic
- * with regards to constructing our API query should live here.
- */
+/*****************************************************************
+ * Builds the URL with parameters for each API call that we
+ * require. All logic with regards to constructing our API query
+ * should live here.
+ *
+ * NOTE: All exported functions returns an API query string. *
+ *****************************************************************/
 
 import { stringify } from 'query-string'
 
-/**
- * Private Constants
- */
-
-const BASE_URL = 'http://localhost:5000'
-const GROUPBY = 'groupby'
-const AGGREGATE = 'aggregate'
-
-/**
- * Public Constants
- */
-
-// Resources
-export const PUBLICATIONS = 'publications'
-export const CITATIONS = 'citations'
-
-// Attributes
-export const YEAR = 'year'
-export const AUTHOR = 'author'
-
-// Aggregations
-export const COUNT = 'count'
+const BASE_URL = 'http://localhost:5000/api'
+const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
+const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
+const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
+const CITATIONS_BY_YEAR = 'num_citations_by_year'
+const CITATION_WEB = 'citation_network'
 
 /**
- * Public Functions
- */
-
-/**
- * Build a API query URL to the backend.
+ * Get the top publications by the number of citations they have.
  *
- * Parameters:
- *   - resource (String)
- *   - groupby (Array[String])
- *   - aggregate (String)
+ * Params:
+ * - venue (String): filter by this venue
+ * - top (Number): get the top N authors
+ */
+export const topPublicationsByCitations = (venue, top) => {
+  const params = { venue, top }
+  return buildUrl(TOP_PUBLICATIONS_BY_CITATIONS, params)
+}
+
+/**
+ * Get the top authors by the number of publications they have.
+ *
+ * Params:
+ * - venue (String): filter by this venue
+ * - top (Number): get the top N authors
+ */
+export const topAuthorsByPublications = (venue, top) => {
+  const params = { venue, top }
+  return buildUrl(TOP_AUTHORS_BY_PUBLICATIONS, params)
+}
+
+/**
+ * Get the number of publications by year.
+ *
+ * Params:
+ * - venue (String): filter by this venue
+ * - author (String): filter by this author
+ */
+export const publicationsByYear = (venue, author) => {
+  const params = { venue, author }
+  return buildUrl(PUBLICATIONS_BY_YEAR, params)
+}
+
+/**
+ * Get the total number of citations by year.
+ *
+ * Params:
+ * - venue (String): filter by this venue
+ * - author (String): filter by this author
+ */
+export const citationsByYear = (venue, author) => {
+  const params = { venue, author }
+  return buildUrl(CITATIONS_BY_YEAR, params)
+}
+
+/**
+ * Gets the required paper for a citation web with the base paper ID.
+ *
+ * Params:
+ * - baseId (String): title of the base paper
+ */
+export const citationWeb = (title) => {
+  const params = { title }
+  return buildUrl(CITATION_WEB, params)
+}
+
+/**
+ * (HELPER)
+ * Build a API query URL to the backend.
  *
  * Returns the string of the complete API query with parameters.
  */
-export const buildUrl = (resource, groupby, aggregate) => {
-  // Resource endpoint is just the concatenation of base URL and our resource
-  const endpoint = `${BASE_URL}/${resource}`
-
-  // Build parameters for our query
-  let params = {
-    groupby: groupby,
-    aggregate: aggregate
-  }
-
-  return `${endpoint}?${stringify(params)}`
+function buildUrl (endpoint, params = {}) {
+  return `${BASE_URL}/${endpoint}?${stringify(params)}`
 }
