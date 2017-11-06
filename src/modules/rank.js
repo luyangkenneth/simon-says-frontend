@@ -53,6 +53,7 @@ export const getGraphData = (state = initialState, categoryKey) => {
   return { categories, data }
 }
 
+// Actions
 export const fetchRank = (resource, venue, author) => ({
   [CALL_API]: {
     endpoint: getUrlBuilder(resource)(venue, author),
