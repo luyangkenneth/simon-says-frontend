@@ -55,16 +55,29 @@ class CitationWebView extends Component {
       <div>
         <Container>
           <Loader loading={loading}>
-            <Row className='mb-3'>
-              <AutoComplete
-                dataSource={publicationTitles}
-                filter={AutoComplete.fuzzyFilter}
-                onNewRequest={this.handleNewRequest}
-                hintText={'Search by title'}
-                floatingLabelText={'Title'}
-                maxSearchResults={10}
-                fullWidth={true}
+            <Row>
+              <Col lg={6}>
+                <h4>Search</h4>
+                <AutoComplete
+                  dataSource={publicationTitles}
+                  filter={AutoComplete.fuzzyFilter}
+                  onNewRequest={this.handleNewRequest}
+                  hintText={'Search by title'}
+                  floatingLabelText={'Title'}
+                  maxSearchResults={10}
+                  fullWidth={true}
+                  />
+              </Col>
+              <Col lg={6}>
+                <h4>Depth of web</h4>
+                <Slider
+                  min={1}
+                  max={5}
+                  step={1}
+                  defaultValue={2}
+                  onChange={this.handleSliderChange}
                 />
+              </Col>
             </Row>
             <Row className='mb-3'>
               <Col lg={6}>
@@ -134,6 +147,10 @@ class CitationWebView extends Component {
 
   handleNewRequest(chosenRequest, index) {
     console.log(`${chosenRequest}@${index}`)
+  }
+
+  handleSliderChange(event, newValue) {
+    console.log(newValue)
   }
 }
 
