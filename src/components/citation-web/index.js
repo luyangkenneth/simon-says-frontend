@@ -26,7 +26,6 @@ const CitationWeb = ({
 }) => {
   return (
     <div>
-      <p>Citation Web</p>
       <InteractiveForceGraph
         zoom={zoom}
         zoomOptions={zoomOptions}

@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Button } from 'reactstrap'
-
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+} from 'reactstrap'
+import {
+  AutoComplete,
+  Slider
+} from 'material-ui'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
 import Loader from '../../components/loader'
@@ -36,10 +44,28 @@ class CitationWebView extends Component {
         y: -0.001
       }
     }
+
+    const publicationTitles = [
+      'Dynamic Power Management for the Iterative Decoding of Turbo Codes',
+      'Designing Very Good Low-density Parity-check Codes for the Gilbert-elliott Channel',
+      'Opportunistic Error Correction for MIMO-OFDM: From Theory to Practice'
+    ]
+
     return (
       <div>
         <Container>
           <Loader loading={loading}>
+            <Row className='mb-3'>
+              <AutoComplete
+                dataSource={publicationTitles}
+                filter={AutoComplete.fuzzyFilter}
+                onNewRequest={this.handleNewRequest}
+                hintText={'Search by title'}
+                floatingLabelText={'Title'}
+                maxSearchResults={10}
+                fullWidth={true}
+                />
+            </Row>
             <Row className='mb-3'>
               <Col lg={6}>
                 <CitationWeb
@@ -47,7 +73,7 @@ class CitationWebView extends Component {
                   highlightDependencies
                   simulationOptions={simulationOptions}
                   data={entities}
-                / >
+                  />
               </Col>
               <Col lg={6} className='my-auto'>
                 {Object.keys(selected).length > 0 ?
@@ -104,6 +130,10 @@ class CitationWebView extends Component {
   changeDepth(depth) {
     const { changeDepth } = this.props
     changeDepth(depth)
+  }
+
+  handleNewRequest(chosenRequest, index) {
+    console.log(`${chosenRequest}@${index}`)
   }
 }
 
