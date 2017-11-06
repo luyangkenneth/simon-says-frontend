@@ -31,7 +31,13 @@ class Rank extends Component {
   }
 
   render() {
-    const { resource, categories, series, loading } = this.props
+    const {
+      resource,
+      categories,
+      series,
+      loading,
+      filters
+    } = this.props
     const labels = ['All Years']
 
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
@@ -85,8 +91,13 @@ class Rank extends Component {
     )
   }
 
-  onClickSeries(e) {
+  onClickSeries= (e) => {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
+  }
+
+  refreshData = (resource, { venue, year, top }) => {
+    const { fetchData } = this.props
+    fetchData(resource, venue, top) // TODO: Include year range in API
   }
 }
 
