@@ -20,8 +20,8 @@ import './styles.css'
  */
 class CitationWebView extends Component {
   componentDidMount() {
-    const { fetchCitationWeb } = this.props
-    fetchCitationWeb()
+    const { fetchCitationWeb, title, depth } = this.props
+    fetchCitationWeb(title, depth)
   }
 
   render() {

@@ -15,7 +15,8 @@ const mapStateToProps = state => ({
   entities: state.citationWeb.apiReducer.entities,
   selected: selectedPublication(state.citationWeb.apiReducer.entities,
                                 state.citationWeb.selected),
-  depth: state.citationWeb.depthReducer.depth
+  depth: state.citationWeb.depthReducer.depth,
+  title: state.citationWeb.depthReducer.title
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -1,5 +1,6 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
+import { citationWeb } from '../apis/cir'
 
 const FETCH_WEB_REQUEST = 'FETCH_WEB_REQUEST'
 const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
@@ -37,8 +38,8 @@ const apiReducer = (state = apiReducerInitialState, action) => {
 
     case FETCH_WEB_SUCCESS:
       return {
-      ...state,
-        entities: action.payload.result,
+        ...state,
+        entities: action.payload,
         loading: false
       }
 
@@ -54,7 +55,8 @@ const apiReducer = (state = apiReducerInitialState, action) => {
 }
 
 const depthReducerInitialState = {
-  depth: 1
+  depth: 1,
+  title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
 }
 
 const depthReducer = (state = depthReducerInitialState, action) => {
@@ -87,9 +89,9 @@ export const selectedPublication = (entities, selection) => {
 }
 
 // Actions
-export const fetchCitationWeb = () => ({
+export const fetchCitationWeb = (title, depth) => ({
   [CALL_API]: {
-    endpoint: 'http://localhost:5000/task4',
+    endpoint: citationWeb(title, depth),
     method: 'GET',
     types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
   }
