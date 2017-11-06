@@ -6,7 +6,6 @@ import Home from './home'
 import getRankView from './rank'
 import CitationWeb from './citation-web'
 import Trend from './trend'
-import getWordcloudView from './wordcloud'
 import getTrendView from './trend'
 import Header from '../components/header'
 

@@ -66,11 +66,13 @@ export const citationsByYear = (venue, author) => {
 /**
  * Gets the required paper for a citation web with the base paper ID.
  *
+ * Depth defaults to 2.
+ *
  * Params:
  * - baseId (String): title of the base paper
  */
-export const citationWeb = (title) => {
-  const params = { title }
+export const citationWeb = (title, depth = 2) => {
+  const params = { title, depth }
   return buildUrl(CITATION_WEB, params)
 }
 
