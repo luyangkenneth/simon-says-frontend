@@ -1,9 +1,4 @@
 import { CALL_API } from 'redux-api-middleware'
-import {
-  buildUrl,
-  AUTHOR,
-  COUNT
-} from '../apis/cir'
 
 const FETCH_WORDCLOUD_REQUEST = 'FETCH_WORDCLOUD_REQUEST'
 const FETCH_WORDCLOUD_SUCCESS = 'FETCH_WORDCLOUD_SUCCESS'
@@ -57,7 +52,7 @@ export const getGraphData = (state = initialState) => {
 
 export const fetchWords = (resource) => ({
   [CALL_API]: {
-    endpoint: buildUrl(resource, [AUTHOR], COUNT),
+    endpoint: 'http://localhost:5000',
     method: 'GET',
     types: [FETCH_WORDCLOUD_REQUEST, FETCH_WORDCLOUD_SUCCESS, FETCH_WORDCLOUD_FAILURE]
   }

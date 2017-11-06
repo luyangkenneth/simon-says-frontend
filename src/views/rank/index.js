@@ -4,6 +4,7 @@ import { Container } from 'reactstrap'
 
 import { PUBLICATIONS } from '../../apis/cir'
 import Loader from '../../components/loader'
+import Multigraph from '../../components/multigraph'
 
 import './styles.scss'
 
@@ -21,14 +22,23 @@ class Rank extends Component {
   }
 
   render() {
-    const { categories, series, loading } = this.props
+    const { resource, categories, series, loading } = this.props
     const labels = ['All Years']
+
+    const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     return (
       <div>
         <Container>
           <Loader loading={loading}>
-            <ReactHighcharts config={this.getConfig({ categories, series }, labels)} />
+            <Multigraph
+              type='bar'
+              title={`Top ${resource}`}
+              xTitle={resource}
+              xValues={categories}
+              yValues={yValues}
+              yTitle={resource}
+            />
           </Loader>
         </Container>
       </div>
@@ -37,58 +47,6 @@ class Rank extends Component {
 
   onClickSeries(e) {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
-  }
-
-  // TODO: It is actually possible to abstract this out into a new component if
-  // we have strong case of reuse here.
-  getConfig({ categories, series }, labels) {
-    return {
-      colors: ['#274C77', '#6096BA', '#ADF7B6', '#FFEE93', '#D9534F', '#FFC09F'],
-      chart: {
-        type: 'bar'
-      },
-      title: {
-        text: this.props.title
-      },
-      xAxis: {
-        categories,
-        title: {
-          text: 'Author'
-        }
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Publications',
-          align: 'high'
-        },
-        labels: {
-          overflow: 'justify'
-        }
-      },
-      tooltip: {
-        valueSuffix: ' publications'
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true
-          },
-          events: {
-            click: this.onClickSeries
-          }
-        }
-      },
-      legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'bottom',
-        x: -40,
-        y: -40,
-        floating: true,
-      },
-      series: series.map((s, idx) => ({ name: labels[idx], data: s }))
-    }
   }
 }
 

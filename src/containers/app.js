@@ -6,7 +6,7 @@ import Home from './home'
 import getRankView from './rank'
 import CitationWeb from './citation-web'
 import Trend from './trend'
-import getWordcloudView from './wordcloud'
+import getTrendView from './trend'
 import Header from '../components/header'
 
 const App = () => (
@@ -31,12 +31,25 @@ const App = () => (
           'Top 10 Authors Ranked by Publications'
         )}
       />
+
+      <Route
+        exact path="/trend/publications"
+        component={getTrendView(
+          'publications',
+          'title',
+          'Top 5 Publications Ranked by Citations'
+        )}
+      />
+      <Route
+        exact path="/trend/citations"
+        component={getTrendView(
+          'citations',
+          'name',
+          'Top 10 Authors Ranked by Publications'
+        )}
+      />
       <Route exact path="/web" component={CitationWeb} />
       <Route exact path="/trend" component={Trend} />
-      <Route exact path="/wordcloud" component={getWordcloudView(
-          'task5',
-          'Wordcloud of key phrases'
-        )} />
     </main>
   </div>
 )
