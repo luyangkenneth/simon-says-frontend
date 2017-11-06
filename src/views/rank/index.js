@@ -56,6 +56,7 @@ class Rank extends Component {
               <div className='mb-3'>
                 <h4>Year Range</h4>
                 <Range
+                  onAfterChange={val => console.log(val)}
                   defaultValue={[2000, 2017]}
                   min={2000}
                   max={2017}
@@ -65,12 +66,13 @@ class Rank extends Component {
                 <h4>Cohort Size</h4>
                 <TooltipSlider min={5} max={30} defaultValue={10} />
               </div>
+            </Col>
+            <Col xs={6}>
+              <h4>Search by Conference</h4>
               <TextField
                 fullWidth
                 floatingLabelText='Venue of Conference'
               />
-            </Col>
-            <Col xs={6}>
             </Col>
           </Row>
         </Container>
