@@ -5,7 +5,7 @@ import {
   Row,
   Col
 } from 'reactstrap'
-import TextField from 'material-ui/TextField'
+import AutoComplete from 'material-ui/AutoComplete'
 import Slider, { createSliderWithTooltip } from 'rc-slider'
 
 import { PUBLICATIONS } from '../../apis/cir'
@@ -35,6 +35,9 @@ class Rank extends Component {
     const labels = ['All Years']
 
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
+
+    // TODO: Fetch this from backend
+    const conferences = ['AAAI', 'NIPS', 'AIML', 'AIMA']
 
     return (
       <div>
@@ -69,8 +72,10 @@ class Rank extends Component {
             </Col>
             <Col xs={6}>
               <h4>Search by Conference</h4>
-              <TextField
+              <AutoComplete
                 fullWidth
+                filter={AutoComplete.caseInsensitiveFilter}
+                dataSource={conferences}
                 floatingLabelText='Venue of Conference'
               />
             </Col>
