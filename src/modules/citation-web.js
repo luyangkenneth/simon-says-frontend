@@ -1,11 +1,13 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
+import { citationWeb } from '../apis/cir'
 
 const FETCH_WEB_REQUEST = 'FETCH_WEB_REQUEST'
 const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
 const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
+const CHANGE_DEPTH = 'CHANGE_DEPTH'
 
 
 // Reducers
@@ -20,13 +22,13 @@ const publicationSelection = (state = '', action) => {
   }
 }
 
-const initialState = {
+const apiReducerInitialState = {
   entities: {},
   loading: true,
   error: false
 }
 
-const apiReducer = (state = initialState, action) => {
+const apiReducer = (state = apiReducerInitialState, action) => {
   switch (action.type) {
     case FETCH_WEB_REQUEST:
       return {
@@ -36,8 +38,8 @@ const apiReducer = (state = initialState, action) => {
 
     case FETCH_WEB_SUCCESS:
       return {
-      ...state,
-        entities: action.payload.result,
+        ...state,
+        entities: action.payload,
         loading: false
       }
 
@@ -52,9 +54,29 @@ const apiReducer = (state = initialState, action) => {
   }
 }
 
+const depthReducerInitialState = {
+  depth: 1,
+  title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
+}
+
+const depthReducer = (state = depthReducerInitialState, action) => {
+  switch (action.type) {
+    case CHANGE_DEPTH:
+      return {
+        ...state,
+        depth: action.payload
+      }
+
+    default:
+      return state
+
+  }
+}
+
 export default combineReducers({
   selected: publicationSelection,
-  apiReducer
+  apiReducer,
+  depthReducer
 })
 
 // Selectors
@@ -67,9 +89,9 @@ export const selectedPublication = (entities, selection) => {
 }
 
 // Actions
-export const fetchCitationWeb = () => ({
+export const fetchCitationWeb = (title, depth) => ({
   [CALL_API]: {
-    endpoint: 'http://localhost:5000/task4',
+    endpoint: citationWeb(title, depth),
     method: 'GET',
     types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
   }
@@ -82,4 +104,9 @@ export const selectPublication = (publicationId) => ({
 
 export const resetSelectedPublication = () => ({
   type: RESET_SELECTED_PUBLICATION
+})
+
+export const changeDepth = (depth) => ({
+  type: CHANGE_DEPTH,
+  payload: depth
 })

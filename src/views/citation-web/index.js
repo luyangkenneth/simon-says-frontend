@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import {
-  InteractiveForceGraph,
-  ForceGraphNode,
-  ForceGraphLink
-} from 'react-vis-force'
-import { scaleLinear } from 'd3-scale'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, Button } from 'reactstrap'
 
 import PublicationCard from '../../components/publication-card'
+import CitationWeb from '../../components/citation-web'
 import Loader from '../../components/loader'
 
 import './styles.css'
@@ -23,14 +18,15 @@ import './styles.css'
  * directed graph library by Uber.
  *
  */
-class CitationWeb extends Component {
+class CitationWebView extends Component {
   componentDidMount() {
-    const { fetchCitationWeb } = this.props
-    fetchCitationWeb()
+    const { fetchCitationWeb, title, depth } = this.props
+    fetchCitationWeb(title, depth)
   }
 
   render() {
-    const { entities, selected, loading } = this.props
+    const { entities, selected, loading, depth } = this.props
+    console.log(depth)
     const simulationOptions = {
       height: 500,
       width: 500,
@@ -45,19 +41,15 @@ class CitationWeb extends Component {
         <Container>
           <Loader loading={loading}>
             <Row className='mb-3'>
-              <Col xs={6}>
-                <InteractiveForceGraph
+              <Col lg={6}>
+                <CitationWeb
                   zoom
                   highlightDependencies
                   simulationOptions={simulationOptions}
-                  onSelectNode={this.showPublication.bind(this)}
-                  onDeselectNode={this.hidePublication.bind(this)}
-                >
-                  {this.getGraphNodes(entities)}
-                  {this.getGraphEdges(entities)}
-                </InteractiveForceGraph>
+                  data={entities}
+                / >
               </Col>
-              <Col xs={6} className='my-auto'>
+              <Col lg={6} className='my-auto'>
                 {Object.keys(selected).length > 0 ?
                   <PublicationCard
                     className='cir__pub-card'
@@ -75,6 +67,14 @@ class CitationWeb extends Component {
                   </p>
                 }
               </Col>
+            </Row>
+            <Row className='mb-3'>
+              <Button
+                color='primary'
+                onClick={this.changeDepth.bind(this)}
+              >
+                Change depth
+              </Button>
             </Row>
           </Loader>
         </Container>
@@ -98,64 +98,13 @@ class CitationWeb extends Component {
     resetSelectedPublication()
   }
 
-  getGraphNodes(data) {
-    const years = Object.keys(data)
-      .map(k => data[k])
-      .map(d => d.year)
-      .filter(y => !isNaN(y))
-
-    const colorScale = scaleLinear()
-      .domain([Math.min(...years), Math.max(...years)])
-      .range(['#EBEEF2', '#274C77'])
-
-    const citations = Object.keys(data)
-      .map(k => data[k])
-      .map(d => d.inCitations.length)
-
-    const radiusScale = scaleLinear()
-      .domain([Math.min(...citations), Math.max(...citations)])
-      .range([7, 20])
-
-    return Object.keys(data)
-      .filter(id => data[id].outCitations.length > 0)
-      .map(k => (
-        <ForceGraphNode
-          key={k}
-          fill={colorScale(data[k].year)}
-          node={{
-            id: k,
-            radius: radiusScale(data[k].inCitations.length),
-            ...data[k]
-          }}
-          showLabel={false}
-        />
-      ))
-  }
-
-  getGraphEdges(data) {
-    return Object.keys(data)
-      .filter(id => data[id].outCitations.length > 0)
-      .reduce((prev, curr) => (
-        prev.concat(data[curr].outCitations
-          .filter(cId => (cId in data))
-          .map(cId => {
-            // +1 to account for zero values
-            let value = data[curr].year - data[cId].year + 1
-            return { source: curr, target: cId, value }
-          })
-          .map(({ source, target, value }) => ({
-            source,
-            target,
-            value: isNaN(value) ? 1 : value
-          }))
-          .map(obj => (
-            <ForceGraphLink
-              key={`${obj.source}=>${obj.target}`}
-              link={obj}
-            />
-          )))
-    ), [])
+  /**
+   * Change depth of citation web
+   */
+  changeDepth(depth) {
+    const { changeDepth } = this.props
+    changeDepth(depth)
   }
 }
 
-export default CitationWeb
+export default CitationWebView
