@@ -89,13 +89,15 @@ export const selectedPublication = (entities, selection) => {
 }
 
 // Actions
-export const fetchCitationWeb = (title, depth) => ({
-  [CALL_API]: {
-    endpoint: citationWeb(title, depth),
-    method: 'GET',
-    types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+export const fetchCitationWeb = (title, depth) => {
+  return {
+    [CALL_API]: {
+      endpoint: citationWeb(title, depth),
+      method: 'GET',
+      types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+    }
   }
-})
+}
 
 export const selectPublication = (publicationId) => ({
   type: SELECT_PUBLICATION,
@@ -106,7 +108,9 @@ export const resetSelectedPublication = () => ({
   type: RESET_SELECTED_PUBLICATION
 })
 
-export const changeDepth = (depth) => ({
-  type: CHANGE_DEPTH,
-  payload: depth
-})
+export const changeDepth = (depth) => {
+  return {
+    type: CHANGE_DEPTH,
+    payload: depth
+  }
+}

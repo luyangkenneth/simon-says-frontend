@@ -34,7 +34,6 @@ class CitationWebView extends Component {
 
   render() {
     const { entities, selected, loading, depth } = this.props
-    console.log(depth)
     const simulationOptions = {
       height: 500,
       width: 500,
@@ -61,7 +60,7 @@ class CitationWebView extends Component {
                 <AutoComplete
                   dataSource={publicationTitles}
                   filter={AutoComplete.fuzzyFilter}
-                  onNewRequest={this.handleNewRequest}
+                  onNewRequest={this.handleNewRequest.bind(this)}
                   hintText={'Search by title'}
                   floatingLabelText={'Title'}
                   maxSearchResults={10}
@@ -75,8 +74,10 @@ class CitationWebView extends Component {
                   max={5}
                   step={1}
                   defaultValue={2}
-                  onChange={this.handleSliderChange}
-                />
+                  value={depth}
+                  onChange={this.handleSliderChange.bind(this)}
+                  />
+                <p>{depth}</p>
               </Col>
             </Row>
             <Row className='mb-3'>
@@ -107,14 +108,6 @@ class CitationWebView extends Component {
                 }
               </Col>
             </Row>
-            <Row className='mb-3'>
-              <Button
-                color='primary'
-                onClick={this.changeDepth.bind(this)}
-              >
-                Change depth
-              </Button>
-            </Row>
           </Loader>
         </Container>
       </div>
@@ -137,20 +130,16 @@ class CitationWebView extends Component {
     resetSelectedPublication()
   }
 
-  /**
-   * Change depth of citation web
-   */
-  changeDepth(depth) {
-    const { changeDepth } = this.props
-    changeDepth(depth)
-  }
-
   handleNewRequest(chosenRequest, index) {
     console.log(`${chosenRequest}@${index}`)
   }
 
   handleSliderChange(event, newValue) {
-    console.log(newValue)
+    const { fetchCitationWeb, changeDepth } = this.props
+    changeDepth(newValue)
+
+    const { title, depth } = this.props
+    fetchCitationWeb(title, depth)
   }
 }
 
