@@ -7,7 +7,7 @@ export default (resource, categoryKey, title) => {
   const mapStateToProps = state => ({
     loading: state.trend.loading,
     error: state.trend.error,
-    categories: getGraphData(state.rank, categoryKey).categories,
+    categories: getGraphData(state.trend, categoryKey).categories,
     series: [getGraphData(state.trend, categoryKey).data],
     resource,
     title
