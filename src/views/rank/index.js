@@ -77,7 +77,10 @@ class Rank extends Component {
           </Row>
           <Row>
             <Col xs={6}>
-              <p>From year <strong className='text-primary'>{filters.year[0]}</strong> to year <strong className='text-primary'>{filters.year[1]}</strong></p>
+              <p className='lead'>
+                From year <strong className='text-primary'>{filters.year[0]}</strong> to
+                year <strong className='text-primary'>{filters.year[1]}</strong>
+              </p>
               <Range
                 onChange={val => { updateFilter('year', val) }}
                 onAfterChange={val => { this.loadData() }}
@@ -87,8 +90,8 @@ class Rank extends Component {
               />
             </Col>
             <Col xs={6}>
-              <p>Top <strong className='text-primary'>{filters.cohort}</strong> authors</p>
-              <TooltipSlider 
+              <p className='lead'>Top <strong className='text-primary'>{filters.cohort}</strong> authors</p>
+              <TooltipSlider
                 min={5}
                 max={30}
                 defaultValue={filters.cohort}
