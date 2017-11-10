@@ -39,17 +39,7 @@ const Multigraph = ({
         plotOptions: {
           bar: { dataLabels: { enabled: true } }
         },
-        legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'top',
-          x: -40,
-          y: 80,
-          floating: true,
-          borderWidth: 1,
-          backgroundColor: '#FFFFFF',
-          shadow: true
-        },
+        legend: { enabled: false },
         credits: { enabled: false },
         series: yValues
       }}

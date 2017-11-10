@@ -30,8 +30,7 @@ class Rank extends Component {
       updateFilter
     } = this.props
 
-    // TODO: Not sure what label this should be
-    const labels = ['Publications']
+    const labels = ['Count']
 
     // TODO: This can be moved out into a selector
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
@@ -50,7 +49,7 @@ class Rank extends Component {
                 xTitle={resource}
                 xValues={categories}
                 yValues={yValues}
-                yTitle={resource}
+                yTitle={'count'}
               />
             </Col>
           </Row>
