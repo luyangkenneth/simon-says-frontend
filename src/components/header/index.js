@@ -9,9 +9,14 @@ import {
   NavLink,
   Container
 } from 'reactstrap';
+import { NavLink as Link } from 'react-router-dom'
+import Paper from 'material-ui/Paper'
+
+import './styles.css'
 
 const Header = () => (
-  <div>
+  <div className='cir__header mb-3'>
+    <Paper>
     <Navbar color="faded" light expand="md">
       <Container>
         <NavbarBrand className='text-primary' href="/">
@@ -20,27 +25,25 @@ const Header = () => (
         <Collapse isOpen={true} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/rank/authors">Top Authors</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/rank/authors">Top Authors</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/rank/publications">Top Publications</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/rank/publications">Top Publications</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/trend/publications">Publication Trends</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/publications">Publication Trends</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/trend/citations">Citation Trends</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/citations">Citation Trends</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/web">Citation Web</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/wordcloud">Word Cloud</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/web">Citation Web</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
       </Container>
     </Navbar>
+    </Paper>
   </div>
 )
 
