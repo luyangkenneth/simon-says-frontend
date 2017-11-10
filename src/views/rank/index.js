@@ -50,6 +50,7 @@ class Rank extends Component {
                 xValues={categories}
                 yValues={yValues}
                 yTitle={'count'}
+                onClickSeries={this.onClickSeries}
               />
             </Col>
           </Row>
