@@ -36,10 +36,11 @@ class Rank extends Component {
       series,
       loading,
       filters,
-      updateFilter
+      updateFilter,
+      title
     } = this.props
-    const labels = ['All Years']
 
+    const labels = ['Publications']
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     // TODO: Fetch this from backend
@@ -52,7 +53,7 @@ class Rank extends Component {
             <Col xs={12}>
               <Multigraph
                 type='bar'
-                title={`Top ${resource}`}
+                title={title(filters.cohort)}
                 xTitle={resource}
                 xValues={categories}
                 yValues={yValues}

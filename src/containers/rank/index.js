@@ -10,6 +10,7 @@ export default (resource, categoryKey, title) => {
     error: state.rank.error,
     categories: getGraphData(state.rank, categoryKey).categories,
     series: [getGraphData(state.rank, categoryKey).data],
+    filters: state.rank.filters,
     resource,
     title
   })

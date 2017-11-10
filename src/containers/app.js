@@ -20,7 +20,7 @@ const App = () => (
         component={getRankView(
           'publications',
           'title',
-          'Top 5 Publications Ranked by Citations'
+          (cohort) => (`Top ${cohort} publications by citations`)
         )}
       />
       <Route
@@ -28,7 +28,7 @@ const App = () => (
         component={getRankView(
           'authors',
           'name',
-          'Top 10 Authors Ranked by Publications'
+          (cohort) => (`Top ${cohort} authors by publications`)
         )}
       />
 
