@@ -25,14 +25,16 @@ class Rank extends Component {
     const {
       resource,
       categories,
-      series,
-      loading,
       filters,
-      updateFilter,
-      title
+      title,
+      series,
+      updateFilter
     } = this.props
 
+    // TODO: Not sure what label this should be
     const labels = ['Publications']
+
+    // TODO: This can be moved out into a selector
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     // TODO: Fetch this from backend
@@ -82,6 +84,8 @@ class Rank extends Component {
   }
 
   onClickSeries= (e) => {
+    // TODO: Do something if series is selected, e.g. open a publication in
+    // a publication card.
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
   }
 
