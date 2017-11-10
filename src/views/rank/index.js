@@ -26,8 +26,7 @@ const Range = createSliderWithTooltip(Slider.Range)
  */
 class Rank extends Component {
   componentDidMount() {
-    const { fetchRank, resource } = this.props
-    fetchRank(resource)
+    this.loadData()
   }
 
   render() {
@@ -48,7 +47,7 @@ class Rank extends Component {
 
     return (
       <div>
-        <Container>
+        <Container fluid={true}>
           <Row style={{ minHeight: '10em' }}>
             <Col xs={12}>
               <Multigraph
@@ -61,37 +60,40 @@ class Rank extends Component {
               />
             </Col>
           </Row>
+        </Container>
+        <Container>
           <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <div className='mb-3'>
-                <h4>Year Range</h4>
-                <Range
-                  onChange={val => { updateFilter('year', val) }}
-                  onAfterChange={val => { this.loadData() }}
-                  defaultValue={[2000, 2017]}
-                  min={2000}
-                  max={2017}
-                />
-              </div>
-              <div className='mb-3'>
-                <h4>Cohort Size</h4>
-                <TooltipSlider 
-                  min={5}
-                  max={30}
-                  defaultValue={10}
-                  onChange={val => { updateFilter('cohort', val) }}
-                  onAfterChange={val => { this.loadData() }}
+                <AutoComplete
+                  fullWidth
+                  filter={AutoComplete.caseInsensitiveFilter}
+                  dataSource={conferences}
+                  floatingLabelText='Search by Conference'
                 />
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col xs={6}>
-              <h4>Search by Conference</h4>
-              <AutoComplete
-                fullWidth
-                filter={AutoComplete.caseInsensitiveFilter}
-                dataSource={conferences}
-                floatingLabelText='Venue of Conference'
+              <p>From year <strong className='text-primary'>2012</strong> to year <strong className='text-primary'>2016</strong></p>
+              <Range
+                onChange={val => { updateFilter('year', val) }}
+                onAfterChange={val => { this.loadData() }}
+                defaultValue={[2000, 2017]}
+                min={2000}
+                max={2017}
               />
+            </Col>
+            <Col xs={6}>
+              <p>Top <strong className='text-primary'>10</strong> authors</p>
+              <TooltipSlider 
+                min={5}
+                max={30}
+                defaultValue={10}
+                onChange={val => { updateFilter('cohort', val) }}
+                onAfterChange={val => { this.loadData() }}
+                />
             </Col>
           </Row>
         </Container>
