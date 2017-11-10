@@ -91,5 +91,9 @@ function buildUrl (endpoint, params = {}) {
       return prev
     }, {})
 
+  if (Object.keys(filtered).length === 0) {
+    return `${BASE_URL}/${endpoint}`
+  }
+
   return `${BASE_URL}/${endpoint}?${stringify(filtered)}`
 }

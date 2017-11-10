@@ -31,7 +31,7 @@ class Trend extends Component {
     const labels = ['All Years']
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
-    const authors = ['jane', 'john', 'tom', 'mary'] //TODO replace with api 
+    const authors = ['jane', 'john', 'tom', 'mary'] //TODO replace with api
 
     return (
       <div>

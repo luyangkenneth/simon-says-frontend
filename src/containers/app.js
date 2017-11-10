@@ -36,7 +36,7 @@ const App = () => (
         exact path="/trend/publications"
         component={getTrendView(
           'publications',
-          'title',
+          'year',
           'Top 5 Publications Ranked by Citations'
         )}
       />
@@ -44,7 +44,7 @@ const App = () => (
         exact path="/trend/citations"
         component={getTrendView(
           'citations',
-          'name',
+          'year',
           'Top 10 Authors Ranked by Publications'
         )}
       />
