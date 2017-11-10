@@ -17,9 +17,8 @@ db-*.json
 .env.test.local
 .env.production.local
 
-# Generated CSS files inside views
-src/views/**/*.css
-src/styles/*.css
+# Generated CSS files
+*.css
 
 npm-debug.log*
 yarn-debug.log*
