@@ -8,7 +8,7 @@
 
 import { stringify } from 'query-string'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'http://localhost:3001/api'
 const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
 const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
@@ -90,6 +90,10 @@ function buildUrl (endpoint, params = {}) {
       prev[id] = params[id]
       return prev
     }, {})
+
+  if (Object.keys(filtered).length === 0) {
+    return `${BASE_URL}/${endpoint}`
+  }
 
   return `${BASE_URL}/${endpoint}?${stringify(filtered)}`
 }
