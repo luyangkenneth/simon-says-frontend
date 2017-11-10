@@ -7,7 +7,9 @@ const Range = createSliderWithTooltip(Slider.Range)
 const SliderYear = ({
   onChange,
   onAfterChange,
-  yearRange
+  yearRange,
+  min,
+  max
 }) => (
   <div>
     <p className='lead'>
@@ -18,8 +20,8 @@ const SliderYear = ({
       onChange={onChange}
       onAfterChange={onAfterChange}
       defaultValue={yearRange}
-      min={yearRange[0]}
-      max={yearRange[1]}
+      min={min}
+      max={max}
     />
   </div>
 )

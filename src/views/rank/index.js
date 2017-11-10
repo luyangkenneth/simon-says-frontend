@@ -71,6 +71,8 @@ class Rank extends Component {
                 onChange={val => { updateFilter('year', val) }}
                 onAfterChange={val => { this.loadData() }}
                 yearRange={filters.year}
+                min={2000}
+                max={2017}
               />
             </Col>
             <Col xs={6}>
