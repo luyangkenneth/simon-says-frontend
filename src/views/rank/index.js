@@ -1,22 +1,13 @@
 import React, { Component } from 'react'
-import ReactHighcharts from 'react-highcharts'
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap'
-import AutoComplete from 'material-ui/AutoComplete'
-import Slider, { createSliderWithTooltip } from 'rc-slider'
+import { Container, Row, Col } from 'reactstrap'
 
 import { PUBLICATIONS } from '../../apis/cir'
 import Multigraph from '../../components/multigraph'
 import SliderCohort from './slider-cohort'
+import SliderYear from './slider-year'
+import SearchbarVenue from './searchbar-venue'
 
-import 'rc-slider/assets/index.css';
 import './styles.scss'
-
-const TooltipSlider = createSliderWithTooltip(Slider)
-const Range = createSliderWithTooltip(Slider.Range)
 
 /**
  * RankView shows the ranking of authors in a single time snapshot.
@@ -66,28 +57,15 @@ class Rank extends Component {
         <Container>
           <Row>
             <Col xs={12}>
-              <div className='mb-3'>
-                <AutoComplete
-                  fullWidth
-                  filter={AutoComplete.caseInsensitiveFilter}
-                  dataSource={conferences}
-                  floatingLabelText='Search by Conference'
-                />
-              </div>
+              <SearchbarVenue conferences={conferences} />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <p className='lead'>
-                From year <strong className='text-primary'>{filters.year[0]}</strong> to
-                year <strong className='text-primary'>{filters.year[1]}</strong>
-              </p>
-              <Range
+              <SliderYear
                 onChange={val => { updateFilter('year', val) }}
                 onAfterChange={val => { this.loadData() }}
-                defaultValue={filters.year}
-                min={2000}
-                max={2017}
+                yearRange={filters.year}
               />
             </Col>
             <Col xs={6}>
