@@ -59,7 +59,11 @@ class Rank extends Component {
         <Container>
           <Row>
             <Col xs={12}>
-              <SearchbarVenue conferences={conferences} />
+              <SearchbarVenue
+                conferences={conferences}
+                onChange={val => { updateFilter('venue', val) }}
+                onConfirm={() => { this.loadData() }}
+              />
             </Col>
           </Row>
           <Row>
