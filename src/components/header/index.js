@@ -33,9 +33,6 @@ const Header = () => (
             <NavItem>
               <NavLink href="/web">Citation Web</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="/wordcloud">Word Cloud</NavLink>
-            </NavItem>
           </Nav>
         </Collapse>
       </Container>
