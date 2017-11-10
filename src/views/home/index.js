@@ -30,21 +30,6 @@ class Home extends Component {
                 </Button>
               </a>
           </Jumbotron>
-          <Multigraph
-            type={'column'}
-            title={'Homosapiens'}
-            xValues={['Rick', 'Morty', 'Jeff', 'Dean', 'Thomas']}
-            xTitle={'Name'}
-            yValues={[
-              { 'name': '1999', data: randomInts(5, 10, 100) },
-              { 'name': '2000', data: randomInts(5, 10, 100) },
-              { 'name': '2001', data: randomInts(5, 10, 100) },
-              { 'name': '2002', data: randomInts(5, 10, 100) },
-              { 'name': '2003', data: randomInts(5, 10, 100) },
-              { 'name': '2004', data: randomInts(5, 10, 100) },
-              { 'name': '2005', data: randomInts(5, 10, 100) }
-            ]}
-          />
         </Container>
       </div>
     )
