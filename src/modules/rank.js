@@ -115,7 +115,6 @@ function getSortedData(entities) {
 }
 
 function getUrlBuilder(resource) {
-  let endpoint;
   switch (resource) {
     case AUTHORS:
       return topAuthorsByPublications

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 
-import { PUBLICATIONS } from '../../apis/cir'
 import Multigraph from '../../components/multigraph'
 import SliderCohort from './slider-cohort'
 import SliderYear from './slider-year'
