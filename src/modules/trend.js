@@ -93,7 +93,7 @@ export const updateFilter = (key, value) => ({
 
 // Sort by key
 function getSortedData(entities) {
-  const sortedKeys = Object.keys(entities).sort((a, b) => a.count < b.count)
+  const sortedKeys = Object.keys(entities).sort()
   return sortedKeys.map(id => ({ year: id, count: entities[id] }))
 }
 
