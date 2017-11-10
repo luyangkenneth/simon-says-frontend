@@ -49,7 +49,7 @@ const apiReducer = (state = initialState, action) => {
 
 const initialFilters = {
   venue: undefined,
-  year: [],
+  year: [2000, 2017],
   cohort: 10
 }
 
