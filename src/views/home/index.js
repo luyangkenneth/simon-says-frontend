@@ -51,25 +51,31 @@ class Home extends Component {
               <h2 className='text-primary'>Explore Visualizations</h2>
             </Col>
             <Col xs={4}>
-              <FeatureCard
-                logo='star'
-                title='Ranks'
-                description='Find out the top authors and publications in the dataset.'
-              />
+              <Link style={{ textDecoration: 'none' }} to='/rank/publications'>
+                <FeatureCard
+                  logo='star'
+                  title='Ranks'
+                  description='Find out the top authors and publications in the dataset.'
+                />
+              </Link>
             </Col>
             <Col xs={4}>
-              <FeatureCard
-                logo='chart-bars'
-                title='Trends'
-                description='How have publications changed over time?'
-              />
+              <Link style={{ textDecoration: 'none' }} to='/trend/publications'>
+                <FeatureCard
+                  logo='chart-bars'
+                  title='Trends'
+                  description='How have publications changed over time?'
+                />
+              </Link>
             </Col>
             <Col xs={4}>
-              <FeatureCard
-                logo='rocket'
-                title='Citation Web'
-                description='Explore relationships between different publications.'
-              />
+              <Link style={{ textDecoration: 'none' }} to='/web'>
+                <FeatureCard
+                  logo='rocket'
+                  title='Citation Web'
+                  description='Explore relationships between different publications.'
+                />
+              </Link>
             </Col>
           </Row>
         </Container>
