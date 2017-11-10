@@ -36,7 +36,8 @@ class Rank extends Component {
       categories,
       series,
       loading,
-      filters
+      filters,
+      updateFilter
     } = this.props
     const labels = ['All Years']
 
@@ -65,7 +66,8 @@ class Rank extends Component {
               <div className='mb-3'>
                 <h4>Year Range</h4>
                 <Range
-                  onAfterChange={val => console.log(val)}
+                  onChange={val => { updateFilter('year', val) }}
+                  onAfterChange={val => { this.loadData() }}
                   defaultValue={[2000, 2017]}
                   min={2000}
                   max={2017}
@@ -73,7 +75,13 @@ class Rank extends Component {
               </div>
               <div className='mb-3'>
                 <h4>Cohort Size</h4>
-                <TooltipSlider min={5} max={30} defaultValue={10} />
+                <TooltipSlider 
+                  min={5}
+                  max={30}
+                  defaultValue={10}
+                  onChange={val => { updateFilter('cohort', val) }}
+                  onAfterChange={val => { this.loadData() }}
+                />
               </div>
             </Col>
             <Col xs={6}>
@@ -95,9 +103,10 @@ class Rank extends Component {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
   }
 
-  refreshData = (resource, { venue, year, top }) => {
-    const { fetchData } = this.props
-    fetchData(resource, venue, top) // TODO: Include year range in API
+  loadData = () => {
+    console.log('Loading data...')
+    const { fetchRank, resource } = this.props
+    fetchRank(resource)
   }
 }
 

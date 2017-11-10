@@ -11,7 +11,7 @@ export const PUBLICATIONS = 'publications'
 const FETCH_RANK_REQUEST = 'FETCH_RANK_REQUEST'
 const FETCH_RANK_SUCCESS = 'FETCH_RANK_SUCCESS'
 const FETCH_RANK_FAILURE = 'FETCH_RANK_FAILURE'
-const UPDATE_FILTER = 'UPDATE_FILTER'
+const UPDATE_FILTER = 'UPDATE_RANK_FILTER'
 
 // Reducers
 
@@ -50,13 +50,14 @@ const apiReducer = (state = initialState, action) => {
 const initialFilters = {
   venue: undefined,
   year: [],
-  top: 10
+  cohort: 10
 }
 
 const filtersReducer = (state = initialFilters, action) => {
   switch (action.type) {
     case UPDATE_FILTER:
-      const { payload } = action.payload
+      console.log(action);
+      const { payload } = action
       return {
         ...state,
         [payload.key]: payload.value
@@ -84,9 +85,9 @@ export const getGraphData = (state = initialState, categoryKey) => {
 
 // Actions
 
-export const fetchRank = (resource, venue, top) => ({
+export const fetchRank = (resource, venue, cohort) => ({
   [CALL_API]: {
-    endpoint: getUrlBuilder(resource)(venue, top),
+    endpoint: getUrlBuilder(resource)(venue, cohort),
     method: 'GET',
     types: [FETCH_RANK_REQUEST, FETCH_RANK_SUCCESS, FETCH_RANK_FAILURE]
   }
