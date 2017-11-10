@@ -10,6 +10,7 @@ import Slider, { createSliderWithTooltip } from 'rc-slider'
 
 import { PUBLICATIONS } from '../../apis/cir'
 import Multigraph from '../../components/multigraph'
+import SliderCohort from './slider-cohort'
 
 import 'rc-slider/assets/index.css';
 import './styles.scss'
@@ -90,14 +91,11 @@ class Rank extends Component {
               />
             </Col>
             <Col xs={6}>
-              <p className='lead'>Top <strong className='text-primary'>{filters.cohort}</strong> authors</p>
-              <TooltipSlider
-                min={5}
-                max={30}
-                defaultValue={filters.cohort}
+              <SliderCohort
                 onChange={val => { updateFilter('cohort', val) }}
                 onAfterChange={val => { this.loadData() }}
-                />
+                cohortValue={filters.cohort}
+              />
             </Col>
           </Row>
         </Container>
