@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
 import ReactHighcharts from 'react-highcharts'
-import { Container } from 'reactstrap'
+import {
+  Container,
+  Row,
+  Col
+} from 'reactstrap'
+import AutoComplete from 'material-ui/AutoComplete'
+import Slider, { createSliderWithTooltip } from 'rc-slider'
 
 import { PUBLICATIONS } from '../../apis/cir'
-import Loader from '../../components/loader'
 import Multigraph from '../../components/multigraph'
 
+import 'rc-slider/assets/index.css';
 import './styles.scss'
+
+const TooltipSlider = createSliderWithTooltip(Slider)
+const Range = createSliderWithTooltip(Slider.Range)
 
 /**
  * RankView shows the ranking of authors in a single time snapshot.
@@ -22,31 +31,73 @@ class Rank extends Component {
   }
 
   render() {
-    const { resource, categories, series, loading } = this.props
+    const {
+      resource,
+      categories,
+      series,
+      loading,
+      filters
+    } = this.props
     const labels = ['All Years']
 
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
+    // TODO: Fetch this from backend
+    const conferences = ['AAAI', 'NIPS', 'AIML', 'AIMA']
+
     return (
       <div>
         <Container>
-          <Loader loading={loading}>
-            <Multigraph
-              type='bar'
-              title={`Top ${resource}`}
-              xTitle={resource}
-              xValues={categories}
-              yValues={yValues}
-              yTitle={resource}
-            />
-          </Loader>
+          <Row style={{ minHeight: '10em' }}>
+            <Col xs={12}>
+              <Multigraph
+                type='bar'
+                title={`Top ${resource}`}
+                xTitle={resource}
+                xValues={categories}
+                yValues={yValues}
+                yTitle={resource}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <div className='mb-3'>
+                <h4>Year Range</h4>
+                <Range
+                  onAfterChange={val => console.log(val)}
+                  defaultValue={[2000, 2017]}
+                  min={2000}
+                  max={2017}
+                />
+              </div>
+              <div className='mb-3'>
+                <h4>Cohort Size</h4>
+                <TooltipSlider min={5} max={30} defaultValue={10} />
+              </div>
+            </Col>
+            <Col xs={6}>
+              <h4>Search by Conference</h4>
+              <AutoComplete
+                fullWidth
+                filter={AutoComplete.caseInsensitiveFilter}
+                dataSource={conferences}
+                floatingLabelText='Venue of Conference'
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     )
   }
 
-  onClickSeries(e) {
+  onClickSeries= (e) => {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
+  }
+
+  refreshData = (resource, { venue, year, top }) => {
+    const { fetchData } = this.props
+    fetchData(resource, venue, top) // TODO: Include year range in API
   }
 }
 
