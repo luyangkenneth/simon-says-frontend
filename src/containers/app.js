@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
-import { Container } from 'reactstrap'
+import { Route } from 'react-router-dom'
 
 import Home from './home'
 import getRankView from './rank'
@@ -9,6 +8,8 @@ import Trend from './trend'
 import getTrendView from './trend'
 import Header from '../components/header'
 import Footer from '../components/footer'
+
+import { AUTHORS, PUBLICATIONS } from '../modules/rank'
 
 const App = () => (
   <div>
@@ -19,17 +20,17 @@ const App = () => (
       <Route
         exact path="/rank/publications"
         component={getRankView(
-          'publications',
+          PUBLICATIONS,
           'title',
-          'Top 5 Publications Ranked by Citations'
+          (cohort) => (`Top ${cohort} publications by citations`)
         )}
       />
       <Route
         exact path="/rank/authors"
         component={getRankView(
-          'authors',
+          AUTHORS,
           'name',
-          'Top 10 Authors Ranked by Publications'
+          (cohort) => (`Top ${cohort} authors by publications`)
         )}
       />
 

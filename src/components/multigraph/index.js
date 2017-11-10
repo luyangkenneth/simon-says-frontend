@@ -8,7 +8,8 @@ const Multigraph = ({
   xTitle,
   yValues,
   yTitle,
-  tooltipSuffix
+  tooltipSuffix,
+  onClickSeries
 }) => (
   <div>
     <ReactHighcharts
@@ -37,19 +38,16 @@ const Multigraph = ({
         },
         tooltip: { valueSuffix: tooltipSuffix },
         plotOptions: {
-          bar: { dataLabels: { enabled: true } }
+          bar: {
+            dataLabels: {
+              enabled: true
+            },
+            events: {
+              click: onClickSeries
+            }
+          }
         },
-        legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'top',
-          x: -40,
-          y: 80,
-          floating: true,
-          borderWidth: 1,
-          backgroundColor: '#FFFFFF',
-          shadow: true
-        },
+        legend: { enabled: false },
         credits: { enabled: false },
         series: yValues
       }}

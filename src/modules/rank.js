@@ -11,7 +11,7 @@ export const PUBLICATIONS = 'publications'
 const FETCH_RANK_REQUEST = 'FETCH_RANK_REQUEST'
 const FETCH_RANK_SUCCESS = 'FETCH_RANK_SUCCESS'
 const FETCH_RANK_FAILURE = 'FETCH_RANK_FAILURE'
-const UPDATE_FILTER = 'UPDATE_FILTER'
+const UPDATE_FILTER = 'UPDATE_RANK_FILTER'
 
 // Reducers
 
@@ -49,14 +49,15 @@ const apiReducer = (state = initialState, action) => {
 
 const initialFilters = {
   venue: undefined,
-  year: [],
-  top: 10
+  year: [2000, 2017],
+  cohort: 10
 }
 
 const filtersReducer = (state = initialFilters, action) => {
   switch (action.type) {
     case UPDATE_FILTER:
-      const { payload } = action.payload
+      console.log(action);
+      const { payload } = action
       return {
         ...state,
         [payload.key]: payload.value
@@ -84,13 +85,23 @@ export const getGraphData = (state = initialState, categoryKey) => {
 
 // Actions
 
-export const fetchRank = (resource, venue, top) => ({
-  [CALL_API]: {
-    endpoint: getUrlBuilder(resource)(venue, top),
-    method: 'GET',
-    types: [FETCH_RANK_REQUEST, FETCH_RANK_SUCCESS, FETCH_RANK_FAILURE]
+export const fetchRank = (resource) => {
+  return (dispatch, getState) => {
+    const { filters } = getState().rank
+
+    dispatch({
+      [CALL_API]: {
+        endpoint: getUrlBuilder(resource)(
+          filters.venue,
+          filters.cohort,
+          filters.year
+        ),
+        method: 'GET',
+        types: [FETCH_RANK_REQUEST, FETCH_RANK_SUCCESS, FETCH_RANK_FAILURE]
+      }
+    })
   }
-})
+}
 
 export const updateFilter = (key, value) => ({
   type: UPDATE_FILTER,
@@ -104,7 +115,6 @@ function getSortedData(entities) {
 }
 
 function getUrlBuilder(resource) {
-  let endpoint;
   switch (resource) {
     case AUTHORS:
       return topAuthorsByPublications

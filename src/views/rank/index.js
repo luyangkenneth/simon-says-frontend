@@ -1,21 +1,12 @@
 import React, { Component } from 'react'
-import ReactHighcharts from 'react-highcharts'
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap'
-import AutoComplete from 'material-ui/AutoComplete'
-import Slider, { createSliderWithTooltip } from 'rc-slider'
+import { Container, Row, Col } from 'reactstrap'
 
-import { PUBLICATIONS } from '../../apis/cir'
 import Multigraph from '../../components/multigraph'
+import SliderCohort from './slider-cohort'
+import SliderYear from './slider-year'
+import SearchbarVenue from './searchbar-venue'
 
-import 'rc-slider/assets/index.css';
 import './styles.scss'
-
-const TooltipSlider = createSliderWithTooltip(Slider)
-const Range = createSliderWithTooltip(Slider.Range)
 
 /**
  * RankView shows the ranking of authors in a single time snapshot.
@@ -26,20 +17,22 @@ const Range = createSliderWithTooltip(Slider.Range)
  */
 class Rank extends Component {
   componentDidMount() {
-    const { fetchRank, resource } = this.props
-    fetchRank(resource)
+    this.loadData()
   }
 
   render() {
     const {
       resource,
       categories,
+      filters,
+      title,
       series,
-      loading,
-      filters
+      updateFilter
     } = this.props
-    const labels = ['All Years']
 
+    const labels = ['Count']
+
+    // TODO: This can be moved out into a selector
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     // TODO: Fetch this from backend
@@ -47,42 +40,46 @@ class Rank extends Component {
 
     return (
       <div>
-        <Container>
+        <Container fluid={true}>
           <Row style={{ minHeight: '10em' }}>
             <Col xs={12}>
               <Multigraph
                 type='bar'
-                title={`Top ${resource}`}
+                title={title(filters.cohort)}
                 xTitle={resource}
                 xValues={categories}
                 yValues={yValues}
-                yTitle={resource}
+                yTitle={'count'}
+                onClickSeries={this.onClickSeries}
+              />
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12}>
+              <SearchbarVenue
+                conferences={conferences}
+                onChange={val => { updateFilter('venue', val) }}
+                onConfirm={() => { this.loadData() }}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <div className='mb-3'>
-                <h4>Year Range</h4>
-                <Range
-                  onAfterChange={val => console.log(val)}
-                  defaultValue={[2000, 2017]}
-                  min={2000}
-                  max={2017}
-                />
-              </div>
-              <div className='mb-3'>
-                <h4>Cohort Size</h4>
-                <TooltipSlider min={5} max={30} defaultValue={10} />
-              </div>
+              <SliderYear
+                onChange={val => { updateFilter('year', val) }}
+                onAfterChange={val => { this.loadData() }}
+                yearRange={filters.year}
+                min={2000}
+                max={2017}
+              />
             </Col>
             <Col xs={6}>
-              <h4>Search by Conference</h4>
-              <AutoComplete
-                fullWidth
-                filter={AutoComplete.caseInsensitiveFilter}
-                dataSource={conferences}
-                floatingLabelText='Venue of Conference'
+              <SliderCohort
+                onChange={val => { updateFilter('cohort', val) }}
+                onAfterChange={val => { this.loadData() }}
+                cohortValue={filters.cohort}
               />
             </Col>
           </Row>
@@ -92,12 +89,15 @@ class Rank extends Component {
   }
 
   onClickSeries= (e) => {
+    // TODO: Do something if series is selected, e.g. open a publication in
+    // a publication card.
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
   }
 
-  refreshData = (resource, { venue, year, top }) => {
-    const { fetchData } = this.props
-    fetchData(resource, venue, top) // TODO: Include year range in API
+  loadData = () => {
+    console.log('Loading data...')
+    const { fetchRank, resource } = this.props
+    fetchRank(resource)
   }
 }
 
