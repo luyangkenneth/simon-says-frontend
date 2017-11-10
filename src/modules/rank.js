@@ -85,13 +85,23 @@ export const getGraphData = (state = initialState, categoryKey) => {
 
 // Actions
 
-export const fetchRank = (resource, venue, cohort) => ({
-  [CALL_API]: {
-    endpoint: getUrlBuilder(resource)(venue, cohort),
-    method: 'GET',
-    types: [FETCH_RANK_REQUEST, FETCH_RANK_SUCCESS, FETCH_RANK_FAILURE]
+export const fetchRank = (resource) => {
+  return (dispatch, getState) => {
+    const { filters } = getState().rank
+
+    dispatch({
+      [CALL_API]: {
+        endpoint: getUrlBuilder(resource)(
+          filters.venue,
+          filters.cohort,
+          filters.year
+        ),
+        method: 'GET',
+        types: [FETCH_RANK_REQUEST, FETCH_RANK_SUCCESS, FETCH_RANK_FAILURE]
+      }
+    })
   }
-})
+}
 
 export const updateFilter = (key, value) => ({
   type: UPDATE_FILTER,
