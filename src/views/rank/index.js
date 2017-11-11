@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import ReactHighcharts from 'react-highcharts'
-import { Container } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 
-import { PUBLICATIONS } from '../../apis/cir'
-import Loader from '../../components/loader'
 import Multigraph from '../../components/multigraph'
+import SliderCohort from './slider-cohort'
+import SliderYear from './slider-year'
+import SearchbarVenue from './searchbar-venue'
 
 import './styles.scss'
 
@@ -17,36 +17,87 @@ import './styles.scss'
  */
 class Rank extends Component {
   componentDidMount() {
-    const { fetchRank, resource } = this.props
-    fetchRank(resource)
+    this.loadData()
   }
 
   render() {
-    const { resource, categories, series, loading } = this.props
-    const labels = ['All Years']
+    const {
+      resource,
+      categories,
+      filters,
+      title,
+      series,
+      updateFilter
+    } = this.props
 
+    const labels = ['Count']
+
+    // TODO: This can be moved out into a selector
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
+
+    // TODO: Fetch this from backend
+    const conferences = ['AAAI', 'NIPS', 'AIML', 'AIMA']
 
     return (
       <div>
+        <Container fluid={true}>
+          <Row style={{ minHeight: '10em' }}>
+            <Col xs={12}>
+              <Multigraph
+                type='bar'
+                title={title(filters.cohort)}
+                xTitle={resource}
+                xValues={categories}
+                yValues={yValues}
+                yTitle={'count'}
+                onClickSeries={this.onClickSeries}
+              />
+            </Col>
+          </Row>
+        </Container>
         <Container>
-          <Loader loading={loading}>
-            <Multigraph
-              type='bar'
-              title={`Top ${resource}`}
-              xTitle={resource}
-              xValues={categories}
-              yValues={yValues}
-              yTitle={resource}
-            />
-          </Loader>
+          <Row>
+            <Col xs={12}>
+              <SearchbarVenue
+                conferences={conferences}
+                onChange={val => { updateFilter('venue', val) }}
+                onConfirm={() => { this.loadData() }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <SliderYear
+                onChange={val => { updateFilter('year', val) }}
+                onAfterChange={val => { this.loadData() }}
+                yearRange={filters.year}
+                min={2000}
+                max={2017}
+              />
+            </Col>
+            <Col xs={6}>
+              <SliderCohort
+                onChange={val => { updateFilter('cohort', val) }}
+                onAfterChange={val => { this.loadData() }}
+                cohortValue={filters.cohort}
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     )
   }
 
-  onClickSeries(e) {
+  onClickSeries= (e) => {
+    // TODO: Do something if series is selected, e.g. open a publication in
+    // a publication card.
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
+  }
+
+  loadData = () => {
+    console.log('Loading data...')
+    const { fetchRank, resource } = this.props
+    fetchRank(resource)
   }
 }
 

@@ -1,4 +1,5 @@
 import { CALL_API } from 'redux-api-middleware'
+import { combineReducers } from 'redux'
 import {
   citationsByYear,
   publicationsByYear
@@ -10,6 +11,9 @@ export const PUBLICATIONS = 'publications'
 const FETCH_TREND_REQUEST = 'FETCH_TREND_REQUEST'
 const FETCH_TREND_SUCCESS = 'FETCH_TREND_SUCCESS'
 const FETCH_TREND_FAILURE = 'FETCH_TREND_FAILURE'
+const UPDATE_FILTER = 'UPDATE_FILTER'
+
+// Reducers
 
 const initialState = {
   entities: {},
@@ -17,7 +21,7 @@ const initialState = {
   error: false
 }
 
-export default (state = initialState, action) => {
+const apiReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TREND_REQUEST:
       return {
@@ -27,7 +31,7 @@ export default (state = initialState, action) => {
 
     case FETCH_TREND_SUCCESS:
       return {
-      ...state,
+        ...state,
         entities: action.payload,
         loading: false
       }
@@ -43,14 +47,36 @@ export default (state = initialState, action) => {
   }
 }
 
+const filtersReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_FILTER:
+      const { payload } = action.payload
+      return {
+        ...state,
+        [payload.key]: payload.value
+      }
+    default:
+      return state
+    }
+}
+
+export default combineReducers ({
+  filters: filtersReducer,
+  apiReducer
+})
+
 // Selector
+
 export const getGraphData = (state = initialState, categoryKey) => {
-  const sorted = getSortedData(state.entities)
+  const { entities } = state.apiReducer
+  const sorted = getSortedData(entities)
   const categories = sorted.map(item => item.year)
   const data = sorted.map(item => item.count)
 
   return { categories, data }
 }
+
+// Actions
 
 export const fetchTrend = (resource, venue, author) => ({
   [CALL_API]: {
@@ -60,9 +86,14 @@ export const fetchTrend = (resource, venue, author) => ({
   }
 })
 
+export const updateFilter = (key, value) => ({
+  type: UPDATE_FILTER,
+  payload: { key, value }
+})
+
 // Sort by key
 function getSortedData(entities) {
-  const sortedKeys = Object.keys(entities).sort((a, b) => a.count < b.count)
+  const sortedKeys = Object.keys(entities).sort()
   return sortedKeys.map(id => ({ year: id, count: entities[id] }))
 }
 

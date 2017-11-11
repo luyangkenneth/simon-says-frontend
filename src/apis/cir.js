@@ -22,8 +22,8 @@ const CITATION_WEB = 'citation_network'
  * - venue (String): filter by this venue
  * - top (Number): get the top N authors
  */
-export const topPublicationsByCitations = (venue, top) => {
-  const params = { venue, top }
+export const topPublicationsByCitations = (venue, top, years) => {
+  const params = { venue, top, years }
   return buildUrl(TOP_PUBLICATIONS_BY_CITATIONS, params)
 }
 
@@ -34,8 +34,8 @@ export const topPublicationsByCitations = (venue, top) => {
  * - venue (String): filter by this venue
  * - top (Number): get the top N authors
  */
-export const topAuthorsByPublications = (venue, top) => {
-  const params = { venue, top }
+export const topAuthorsByPublications = (venue, top, years) => {
+  const params = { venue, top, years }
   return buildUrl(TOP_AUTHORS_BY_PUBLICATIONS, params)
 }
 
@@ -90,6 +90,10 @@ function buildUrl (endpoint, params = {}) {
       prev[id] = params[id]
       return prev
     }, {})
+
+  if (Object.keys(filtered).length === 0) {
+    return `${BASE_URL}/${endpoint}`
+  }
 
   return `${BASE_URL}/${endpoint}?${stringify(filtered)}`
 }
