@@ -5,8 +5,7 @@ import {
   fetchCitationWeb,
   selectPublication,
   resetSelectedPublication,
-  selectedPublication,
-  changeDepth
+  selectedPublication
 } from '../../modules/citation-web'
 
 const mapStateToProps = state => ({
@@ -22,8 +21,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchCitationWeb,
   selectPublication,
-  resetSelectedPublication,
-  changeDepth
+  resetSelectedPublication
 }, dispatch)
 
 export default connect(

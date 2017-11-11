@@ -8,7 +8,8 @@ const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
 const CHANGE_DEPTH = 'CHANGE_DEPTH'
-
+const CHANGE_MAX_DEPTH = 'CHANGE_MAX_DEPTH'
+const CHANGE_TITLE = 'CHANGE_TITLE'
 
 // Reducers
 const publicationSelection = (state = '', action) => {
@@ -56,6 +57,7 @@ const apiReducer = (state = apiReducerInitialState, action) => {
 
 const depthReducerInitialState = {
   depth: 1,
+  maxDepth: 1,
   title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
 }
 
@@ -65,6 +67,18 @@ const depthReducer = (state = depthReducerInitialState, action) => {
       return {
         ...state,
         depth: action.payload
+      }
+
+    case CHANGE_MAX_DEPTH:
+      return {
+        ...state,
+        maxDepth: action.payload
+      }
+
+    case CHANGE_TITLE:
+      return {
+        ...state,
+        title: action.payload
       }
 
     default:
@@ -89,13 +103,26 @@ export const selectedPublication = (entities, selection) => {
 }
 
 // Actions
-export const fetchCitationWeb = (title, depth) => {
-  return {
-    [CALL_API]: {
-      endpoint: citationWeb(title, depth),
-      method: 'GET',
-      types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+export const fetchCitationWeb = (queryTitle, queryDepth) => {
+  return (dispatch, getState) => {
+    const { maxDepth, title } = getState().citationWeb.depthReducer
+
+    if (queryTitle !== title || queryDepth > maxDepth) {
+      // update states
+      // call API
+      dispatch(changeMaxDepth(queryDepth))
+      dispatch(changeTitle(queryTitle))
+
+      dispatch({
+        [CALL_API]: {
+          endpoint: citationWeb(queryTitle, queryDepth),
+          method: 'GET',
+          types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+        }
+      })
     }
+
+    dispatch(changeDepth(queryDepth))
   }
 }
 
@@ -108,9 +135,23 @@ export const resetSelectedPublication = () => ({
   type: RESET_SELECTED_PUBLICATION
 })
 
-export const changeDepth = (depth) => {
+const changeDepth = (depth) => {
   return {
     type: CHANGE_DEPTH,
     payload: depth
+  }
+}
+
+const changeMaxDepth = (depth) => {
+  return {
+    type: CHANGE_MAX_DEPTH,
+    payload: depth
+  }
+}
+
+const changeTitle = (title) => {
+  return {
+    type: CHANGE_TITLE,
+    payload: title
   }
 }

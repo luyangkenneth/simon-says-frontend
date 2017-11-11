@@ -74,7 +74,7 @@ class CitationWebView extends Component {
                 step={1}
                 defaultValue={2}
                 value={depth}
-                onChange={this.handleSliderChange.bind(this)}
+                onChange={this.handleSliderChange}
                 />
               <p>{depth}</p>
             </Col>
@@ -132,12 +132,11 @@ class CitationWebView extends Component {
     console.log(`${chosenRequest}@${index}`)
   }
 
-  handleSliderChange(event, newValue) {
-    const { fetchCitationWeb, changeDepth } = this.props
-    changeDepth(newValue)
+  handleSliderChange = (event, newValue) => {
+    const { fetchCitationWeb } = this.props
 
     const { title, depth } = this.props
-    fetchCitationWeb(title, depth)
+    fetchCitationWeb(title, newValue)
   }
 }
 
