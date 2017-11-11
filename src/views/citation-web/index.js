@@ -53,62 +53,60 @@ class CitationWebView extends Component {
     return (
       <div>
         <Container>
-          <Loader loading={loading}>
-            <Row>
-              <Col lg={6}>
-                <h4>Search</h4>
-                <AutoComplete
-                  dataSource={publicationTitles}
-                  filter={AutoComplete.fuzzyFilter}
-                  onNewRequest={this.handleNewRequest.bind(this)}
-                  hintText={'Search by title'}
-                  floatingLabelText={'Title'}
-                  maxSearchResults={10}
-                  fullWidth={true}
-                  />
-              </Col>
-              <Col lg={6}>
-                <h4>Depth of web</h4>
-                <Slider
-                  min={1}
-                  max={5}
-                  step={1}
-                  defaultValue={2}
-                  value={depth}
-                  onChange={this.handleSliderChange.bind(this)}
-                  />
-                <p>{depth}</p>
-              </Col>
-            </Row>
-            <Row className='mb-3'>
-              <Col lg={6}>
-                <CitationWeb
-                  zoom
-                  highlightDependencies
-                  simulationOptions={simulationOptions}
-                  data={entities}
-                  />
-              </Col>
-              <Col lg={6} className='my-auto'>
-                {Object.keys(selected).length > 0 ?
-                  <PublicationCard
-                    className='cir__pub-card'
-                    title={selected.title}
-                    year={selected.year}
-                    abstract={selected.paperAbstract}
-                    authors={selected.authors}
-                    pdfUrls={selected.pdfUrls}
-                    inCitations={selected.inCitations}
-                    outCitations={selected.outCitations}
+          <Row>
+            <Col lg={6}>
+              <h4>Search</h4>
+              <AutoComplete
+                dataSource={publicationTitles}
+                filter={AutoComplete.fuzzyFilter}
+                onNewRequest={this.handleNewRequest.bind(this)}
+                hintText={'Search by title'}
+                floatingLabelText={'Title'}
+                maxSearchResults={10}
+                fullWidth={true}
                 />
-                  :
-                  <p className='cir__flashy text-center lead'>
-                    Click on a node to view more details
-                  </p>
-                }
-              </Col>
-            </Row>
-          </Loader>
+            </Col>
+            <Col lg={6}>
+              <h4>Depth of web</h4>
+              <Slider
+                min={1}
+                max={5}
+                step={1}
+                defaultValue={2}
+                value={depth}
+                onChange={this.handleSliderChange.bind(this)}
+                />
+              <p>{depth}</p>
+            </Col>
+          </Row>
+          <Row className='mb-3'>
+            <Col lg={6}>
+              <CitationWeb
+                zoom
+                highlightDependencies
+                simulationOptions={simulationOptions}
+                data={entities}
+                />
+            </Col>
+            <Col lg={6} className='my-auto'>
+              {Object.keys(selected).length > 0 ?
+                <PublicationCard
+                  className='cir__pub-card'
+                  title={selected.title}
+                  year={selected.year}
+                  abstract={selected.paperAbstract}
+                  authors={selected.authors}
+                  pdfUrls={selected.pdfUrls}
+                  inCitations={selected.inCitations}
+                  outCitations={selected.outCitations}
+              />
+                :
+                <p className='cir__flashy text-center lead'>
+                  Click on a node to view more details
+                </p>
+              }
+            </Col>
+          </Row>
         </Container>
       </div>
     )
