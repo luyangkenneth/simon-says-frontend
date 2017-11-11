@@ -59,7 +59,7 @@ class CitationWebView extends Component {
               <AutoComplete
                 dataSource={publicationTitles}
                 filter={AutoComplete.fuzzyFilter}
-                onNewRequest={this.handleNewRequest.bind(this)}
+                onNewRequest={this.handleNewRequest}
                 hintText={'Search by title'}
                 floatingLabelText={'Title'}
                 maxSearchResults={10}
@@ -67,7 +67,7 @@ class CitationWebView extends Component {
                 />
             </Col>
             <Col lg={6}>
-              <h4>Depth of web</h4>
+              <h4>Depth of web: {depth}</h4>
               <Slider
                 min={1}
                 max={5}
@@ -76,7 +76,6 @@ class CitationWebView extends Component {
                 value={depth}
                 onChange={this.handleSliderChange}
                 />
-              <p>{depth}</p>
             </Col>
           </Row>
           <Row className='mb-3'>
@@ -128,8 +127,10 @@ class CitationWebView extends Component {
     resetSelectedPublication()
   }
 
-  handleNewRequest(chosenRequest, index) {
-    console.log(`${chosenRequest}@${index}`)
+  handleNewRequest = (chosenRequest, index) => {
+    const { fetchCitationWeb, depth } = this.props
+
+    fetchCitationWeb(chosenRequest, depth)
   }
 
   handleSliderChange = (event, newValue) => {
