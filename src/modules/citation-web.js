@@ -55,13 +55,13 @@ const apiReducer = (state = apiReducerInitialState, action) => {
   }
 }
 
-const depthReducerInitialState = {
+const queryReducerInitialState = {
   depth: 1,
   maxDepth: 1,
   title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
 }
 
-const depthReducer = (state = depthReducerInitialState, action) => {
+const queryReducer = (state = queryReducerInitialState, action) => {
   switch (action.type) {
     case CHANGE_DEPTH:
       return {
@@ -90,7 +90,7 @@ const depthReducer = (state = depthReducerInitialState, action) => {
 export default combineReducers({
   selected: publicationSelection,
   apiReducer,
-  depthReducer
+  queryReducer
 })
 
 // Selectors
@@ -105,7 +105,7 @@ export const selectedPublication = (entities, selection) => {
 // Actions
 export const fetchCitationWeb = (queryTitle, queryDepth) => {
   return (dispatch, getState) => {
-    const { maxDepth, title } = getState().citationWeb.depthReducer
+    const { maxDepth, title } = getState().citationWeb.queryReducer
 
     if (queryTitle !== title || queryDepth > maxDepth) {
       // update states
