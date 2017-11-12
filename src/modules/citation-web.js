@@ -1,6 +1,10 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
-import { citationWeb, publicationTitles } from '../apis/cir'
+import {
+  citationWeb,
+  publicationTitles,
+  publications
+ } from '../apis/cir'
 
 const FETCH_WEB_REQUEST = 'FETCH_WEB_REQUEST'
 const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
@@ -8,6 +12,9 @@ const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
 const FETCH_TITLES_REQUEST = 'FETCH_TITLES_REQUEST'
 const FETCH_TITLES_SUCCESS = 'FETCH_TITLES_SUCCESS'
 const FETCH_TITLES_FAILURE = 'FETCH_TITLES_FAILURE'
+const FETCH_PUBLICATIONS_REQUEST = 'FETCH_PUBLICATIONS_REQUEST'
+const FETCH_PUBLICATIONS_SUCCESS = 'FETCH_PUBLICATIONS_SUCCESS'
+const FETCH_PUBLICATIONS_FAILURE = 'FETCH_PUBLICATIONS_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
 const CHANGE_DEPTH = 'CHANGE_DEPTH'
@@ -90,6 +97,41 @@ const titlesApiReducer = (state = titlesApiReducerInitialState, action) => {
   }
 }
 
+const publicationsApiReducerInitialState = {
+  publications: {},
+  loading: true,
+  error: false
+}
+
+const publicationsApiReducer = (state = publicationsApiReducerInitialState, action) => {
+  switch (action.type) {
+    case FETCH_PUBLICATIONS_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case FETCH_PUBLICATIONS_SUCCESS:
+      return {
+        ...state,
+        publications: {
+          ...state.publications,
+          [getPublicationId(action.payload)]: action.payload
+        },
+        loading: false
+      }
+
+    case FETCH_PUBLICATIONS_FAILURE:
+      return {
+        ...state,
+        error: true
+      }
+
+    default:
+      return state
+  }
+}
+
 const queryReducerInitialState = {
   depth: 2,
   maxDepth: 2,
@@ -126,6 +168,7 @@ export default combineReducers({
   selected: publicationSelection,
   citationApiReducer,
   titlesApiReducer,
+  publicationsApiReducer,
   queryReducer
 })
 
@@ -172,6 +215,20 @@ export const fetchPublicationTitles = () => {
   }
 }
 
+export const fetchPublications = (pub_id) => {
+  return {
+    [CALL_API]: {
+      endpoint: publications(pub_id),
+      method: 'GET',
+      types: [
+        FETCH_PUBLICATIONS_REQUEST,
+        FETCH_PUBLICATIONS_SUCCESS,
+        FETCH_PUBLICATIONS_FAILURE
+      ]
+    }
+  }
+}
+
 export const selectPublication = (publicationId) => ({
   type: SELECT_PUBLICATION,
   payload: publicationId
@@ -201,3 +258,5 @@ const changeTitle = (title) => {
     payload: title
   }
 }
+
+const getPublicationId = publication => (publication['publication_id'])

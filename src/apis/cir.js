@@ -16,6 +16,7 @@ const CITATIONS_BY_YEAR = 'num_citations_by_year'
 const CITATION_WEB = 'citation_network'
 const AUTHORS = 'authors'
 const PUBLICATION_TITLES = 'publication_titles'
+const PUBLICATIONS = 'publications'
 const VENUES = 'venues'
 
 /**
@@ -108,6 +109,16 @@ export const publicationTitles = () => {
  * Get all available venues
  */
 export const venues = () => buildUrl(VENUES)
+
+/**
+ * Get publication
+ *
+ * Params:
+ * - publication_id (String): id of publication
+ */
+export const publications = publication_id => {
+  return buildUrl(`${PUBLICATIONS}/${publication_id}`)
+}
 
 /**
  * (HELPER)

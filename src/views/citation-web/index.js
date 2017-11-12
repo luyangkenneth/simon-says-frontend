@@ -30,6 +30,7 @@ class CitationWebView extends Component {
       depth,
       titles,
       titlesLoading,
+      publicationsLoading,
       selected,
       citationLoading
     } = this.props
@@ -79,11 +80,13 @@ class CitationWebView extends Component {
                 zoom
                 highlightDependencies
                 simulationOptions={simulationOptions}
+                onSelectNode={this.showPublication}
+                onDeselectNode={this.hidePublication}
                 data={entities}
                 />
             </Col>
             <Col lg={6} className='my-auto'>
-              {Object.keys(selected).length > 0 ?
+              {!publicationsLoading && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
                   title={selected.title}
@@ -109,15 +112,16 @@ class CitationWebView extends Component {
   /**
    * Shows a publication's detail given its node in the graph.
    */
-  showPublication(event, node) {
-    const { selectPublication } = this.props
+  showPublication = (event, node) => {
+    const { selectPublication, fetchPublications } = this.props
+    fetchPublications(node.id)
     selectPublication(node.id)
   }
 
   /**
    * Resets the selected publication.
    */
-  hidePublication(event, node) {
+  hidePublication = (event, node) => {
     const { resetSelectedPublication } = this.props
     resetSelectedPublication()
   }
