@@ -86,7 +86,7 @@ class Trend extends Component {
 
   loadAuthors = () => {
     console.log('Loading authors...')
-    const { fetchAuthors, resource } = this.props
+    const { fetchAuthors } = this.props
     fetchAuthors()
    }
 

@@ -188,5 +188,11 @@
         "Mouse",
         "Donald",
         "Duck"
+    ],
+    "venues": [
+        "AAAI",
+        "ABC",
+        "BBB",
+        "CCC"
     ]
 }
