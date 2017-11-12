@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import HoverPaper from '../../../components/hover-paper'
 
 import './styles.css'
