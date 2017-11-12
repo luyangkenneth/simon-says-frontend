@@ -27,13 +27,30 @@ import './styles.css'
  *
  */
 class CitationWebView extends Component {
+  publicationTitles = [
+    'Dynamic Power Management for the Iterative Decoding of Turbo Codes',
+    'Designing Very Good Low-density Parity-check Codes for the Gilbert-elliott Channel',
+    'Opportunistic Error Correction for MIMO-OFDM: From Theory to Practice'
+  ]
+
   componentDidMount() {
-    const { fetchCitationWeb, title, depth } = this.props
+    const { fetchCitationWeb, fetchPublicationTitles } = this.props
+    const { title, depth } = this.props
+
     fetchCitationWeb(title, depth)
+    fetchPublicationTitles()
   }
 
   render() {
-    const { entities, selected, loading, depth } = this.props
+    const {
+      entities,
+      depth,
+      titles,
+      titlesLoading,
+      selected,
+      citationLoading
+    } = this.props
+
     const simulationOptions = {
       height: 500,
       width: 500,
@@ -44,24 +61,17 @@ class CitationWebView extends Component {
       }
     }
 
-    const publicationTitles = [
-      'Dynamic Power Management for the Iterative Decoding of Turbo Codes',
-      'Designing Very Good Low-density Parity-check Codes for the Gilbert-elliott Channel',
-      'Opportunistic Error Correction for MIMO-OFDM: From Theory to Practice'
-    ]
-
     return (
       <div>
         <Container>
           <Row>
             <Col lg={6}>
-              <h4>Search</h4>
               <AutoComplete
-                dataSource={publicationTitles}
+                dataSource={titlesLoading ? [] : titles}
                 filter={AutoComplete.fuzzyFilter}
                 onNewRequest={this.handleNewRequest}
                 hintText={'Search by title'}
-                floatingLabelText={'Title'}
+                floatingLabelText={'Search by title'}
                 maxSearchResults={10}
                 fullWidth={true}
                 />
@@ -128,7 +138,11 @@ class CitationWebView extends Component {
   }
 
   handleNewRequest = (chosenRequest, index) => {
-    const { fetchCitationWeb, depth } = this.props
+    const { fetchCitationWeb, depth, titles } = this.props
+
+    if (!titles.includes(chosenRequest)) {
+      return
+    }
 
     fetchCitationWeb(chosenRequest, depth)
   }

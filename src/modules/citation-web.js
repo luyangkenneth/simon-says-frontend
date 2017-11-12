@@ -1,10 +1,13 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
-import { citationWeb } from '../apis/cir'
+import { citationWeb, publicationTitles } from '../apis/cir'
 
 const FETCH_WEB_REQUEST = 'FETCH_WEB_REQUEST'
 const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
 const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
+const FETCH_TITLES_REQUEST = 'FETCH_TITLES_REQUEST'
+const FETCH_TITLES_SUCCESS = 'FETCH_TITLES_SUCCESS'
+const FETCH_TITLES_FAILURE = 'FETCH_TITLES_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
 const CHANGE_DEPTH = 'CHANGE_DEPTH'
@@ -23,13 +26,13 @@ const publicationSelection = (state = '', action) => {
   }
 }
 
-const apiReducerInitialState = {
+const citationApiReducerInitialState = {
   entities: {},
   loading: true,
   error: false
 }
 
-const apiReducer = (state = apiReducerInitialState, action) => {
+const citationApiReducer = (state = citationApiReducerInitialState, action) => {
   switch (action.type) {
     case FETCH_WEB_REQUEST:
       return {
@@ -45,6 +48,38 @@ const apiReducer = (state = apiReducerInitialState, action) => {
       }
 
     case FETCH_WEB_FAILURE:
+      return {
+        ...state,
+        error: true
+      }
+
+    default:
+      return state
+  }
+}
+
+const titlesApiReducerInitialState = {
+  titles: [],
+  loading: true,
+  error: false
+}
+
+const titlesApiReducer = (state = titlesApiReducerInitialState, action) => {
+  switch (action.type) {
+    case FETCH_TITLES_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case FETCH_TITLES_SUCCESS:
+      return {
+        ...state,
+        titles: action.payload,
+        loading: false
+      }
+
+    case FETCH_TITLES_FAILURE:
       return {
         ...state,
         error: true
@@ -89,7 +124,8 @@ const queryReducer = (state = queryReducerInitialState, action) => {
 
 export default combineReducers({
   selected: publicationSelection,
-  apiReducer,
+  citationApiReducer,
+  titlesApiReducer,
   queryReducer
 })
 
@@ -123,6 +159,16 @@ export const fetchCitationWeb = (queryTitle, queryDepth) => {
     }
 
     dispatch(changeDepth(queryDepth))
+  }
+}
+
+export const fetchPublicationTitles = () => {
+  return {
+    [CALL_API]: {
+      endpoint: publicationTitles(),
+      method: 'GET',
+      types: [FETCH_TITLES_REQUEST, FETCH_TITLES_SUCCESS, FETCH_TITLES_FAILURE]
+    }
   }
 }
 
