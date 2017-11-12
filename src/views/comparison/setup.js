@@ -29,7 +29,12 @@ class Setup extends React.Component {
     if (stepIndex < 2) {
       this.setState({stepIndex: stepIndex + 1})
     } else {
-      // TODO: Trigger the fetch for data!
+      const { selectedAuthors, fetchData, completeSetup } = this.props
+
+      selectedAuthors.forEach(author => {
+        fetchData(author)
+      })
+      completeSetup()
     }
   }
 

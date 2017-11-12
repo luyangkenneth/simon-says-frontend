@@ -1,7 +1,9 @@
 const SET_AUTHORS = 'SET_AUTHORS'
 const SET_YEAR_RANGE = 'SET_YEAR_RANGE'
+const COMPLETE_SETUP = 'COMPLETE_SETUP'
 
 const initialState = {
+  complete: false,
   authors: [],
   years: [1990, 2017]
 }
@@ -18,6 +20,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         years: action.payload
+      }
+    case COMPLETE_SETUP:
+      return {
+        ...state,
+        complete: true
       }
     default:
       return state
@@ -37,6 +44,10 @@ export const setAuthors = (authors) => ({
 export const setYearRange = (start, end) => ({
   type: SET_YEAR_RANGE,
   payload: [start, end]
+})
+
+export const completeSetup = () => ({
+  type: COMPLETE_SETUP
 })
 
 export default reducer

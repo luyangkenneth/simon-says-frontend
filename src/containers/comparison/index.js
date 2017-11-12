@@ -6,8 +6,12 @@ import {
   setAuthors,
   setYearRange,
   getAuthors,
-  getYearRange
+  getYearRange,
+  completeSetup
 } from '../../modules/comparison/setup'
+import {
+  fetchPublicationTrend
+} from '../../modules/comparison'
 import {
   getAllAuthors,
   fetchAuthors
@@ -20,6 +24,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  completeSetup,
+  fetchPublicationTrend,
   fetchAuthors,
   setAuthors,
   setYearRange

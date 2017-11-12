@@ -21,7 +21,7 @@ const reducer = createAPIReducer(RESOURCE, {}, (state, payload) => ({
 export const fetchPublicationTrend = author => {
   return createAPIAction(
     RESOURCE,
-    publicationsByYear(undefined, author),
+    () => publicationsByYear(undefined, author),
     (action, state, res) => {
       return res.json().then(json => ({
         author,
