@@ -87,7 +87,7 @@ export const getGraphData = (state = initialState, categoryKey) => {
 
 export const fetchTrend = (resource) => {
   return (dispatch, getState) => {
-      const { filters } = getState().rank
+      const { filters } = getState().trend
 
       dispatch({
         [CALL_API]: {
