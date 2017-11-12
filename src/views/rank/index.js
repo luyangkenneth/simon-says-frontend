@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import Paper from 'material-ui/Paper'
 
 import Multigraph from '../../components/multigraph'
 import SliderCohort from './slider-cohort'
@@ -58,38 +57,32 @@ class Rank extends Component {
         </Container>
         <Container>
           <Row>
-            <Col xs={12}>
-              <Paper className='p-3 mb-4'>
-                <SearchbarVenue
-                  conferences={conferences}
-                  onChange={val => { updateFilter('venue', val) }}
-                  onConfirm={() => { this.loadData() }}
-                />
-              </Paper>
+            <Col xs={12} className='mb-4'>
+              <SearchbarVenue
+                conferences={conferences}
+                onChange={val => { updateFilter('venue', val) }}
+                onConfirm={() => { this.loadData() }}
+              />
             </Col>
           </Row>
 
           <Row>
             <Col xs={6}>
-              <Paper className='p-4'>
-                <SliderYear
-                  onChange={val => { updateFilter('year', val) }}
-                  onAfterChange={val => { this.loadData() }}
-                  yearRange={filters.year}
-                  min={2000}
-                  max={2017}
-                />
-              </Paper>
+              <SliderYear
+                onChange={val => { updateFilter('year', val) }}
+                onAfterChange={val => { this.loadData() }}
+                yearRange={filters.year}
+                min={2000}
+                max={2017}
+              />
             </Col>
             <Col xs={6}>
-              <Paper className='p-4'>
-                <SliderCohort
-                  resource={resource}
-                  onChange={val => { updateFilter('cohort', val) }}
-                  onAfterChange={val => { this.loadData() }}
-                  cohortValue={filters.cohort}
-                />
-              </Paper>
+              <SliderCohort
+                resource={resource}
+                onChange={val => { updateFilter('cohort', val) }}
+                onAfterChange={val => { this.loadData() }}
+                cohortValue={filters.cohort}
+              />
             </Col>
           </Row>
         </Container>
