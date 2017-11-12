@@ -50,7 +50,7 @@ class Trend extends Component {
         </Container>
         <Container>
           <Row>
-            <Col xs={12}>
+            <Col xs={12} className='mb-4'>
               <SearchbarAuthor
                 authors={authors}
                 onChange={val => {updateFilter('author', val)}}
