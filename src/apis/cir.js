@@ -13,7 +13,7 @@ const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
 const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
 const CITATIONS_BY_YEAR = 'num_citations_by_year'
-const CITATION_WEB = 'citation_web'
+const CITATION_WEB = 'citation_network'
 const PUBLICATION_TITLES = 'publication_titles'
 
 /**
