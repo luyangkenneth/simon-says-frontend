@@ -1,20 +1,10 @@
 import React, { Component } from 'react'
-import ReactHighcharts from 'react-highcharts'
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap'
-import AutoComplete from 'material-ui/AutoComplete'
-import Slider, { createSliderWithTooltip } from 'rc-slider'
-import Loader from '../../components/loader'
+import { Container, Row, Col } from 'reactstrap'
 import Multigraph from '../../components/multigraph'
+import SliderYear from '../rank/slider-year'
+import SearchbarAuthor from './searchbar-author'
 
-import 'rc-slider/assets/index.css';
 import './styles.scss'
-
-const TooltipSlider = createSliderWithTooltip(Slider)
-const Range = createSliderWithTooltip(Slider.Range)
 
 /**
  * TrendView shows the trend of publications/citations over the years.
@@ -22,51 +12,60 @@ const Range = createSliderWithTooltip(Slider.Range)
  */
 class Trend extends Component {
   componentDidMount() {
-    const { fetchTrend, resource } = this.props
-    fetchTrend(resource)
+    this.loadData()
   }
 
   render() {
-    const { series, categories, loading } = this.props
-    const labels = ['All Years']
+    const {
+      resource,
+      categories,
+      filters,
+      title,
+      series,
+      updateFilter
+    } = this.props
+
+    const labels = ['Count']
+
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
 
     const authors = ['jane', 'john', 'tom', 'mary'] //TODO replace with api
 
     return (
       <div>
-        <Container>
+        <Container fluid={true}>
           <Row style={{ minHeight: '10em' }}>
             <Col xs={12}>
               <Multigraph
                 type='line'
-                title='Test Trend Title'
-                xTitle='Test X Title'
+                title='test title'
+                xTitle={resource}
                 xValues={categories}
-                yTitle='Test Y Title'
+                yTitle={'count'}
                 yValues={yValues}
+                onClickSeries={this.onClickSeries}
+              />
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12}>
+              <SearchbarAuthor
+                authors={authors}
+                onChange={val => {updateFilter('author', val)}}
+                onConfirm={() => {this.loadData() }}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <div className='mb-3'>
-                <h4>Year Range</h4>
-                <Range
-                  onAfterChange={val => console.log(val)}
-                  defaultValue={[2000, 2017]}
-                  min={2000}
-                  max={2017}
-                />
-              </div>
-            </Col>
-            <Col xs={6}>
-              <h4>Search by Author</h4>
-              <AutoComplete
-                fullWidth
-                filter={AutoComplete.caseInsensitiveFilter}
-                dataSource={authors}
-                floatingLabelText='Author'
+              <SliderYear
+                onChange={val => {updateFilter('year', val)}}
+                onAfterChange={val => { this.loadData() }}
+                yearRange={filters.year}
+                min={2000}
+                max={2017}
               />
             </Col>
           </Row>
@@ -75,8 +74,14 @@ class Trend extends Component {
     )
   }
 
-  onClickSeries(e) {
+  onClickSeries = (e) => {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
+  }
+
+  loadData = () => {
+    console.log('Loading data...')
+    const { fetchTrend, resource } = this.props
+    fetchTrend(resource)
   }
 }
 

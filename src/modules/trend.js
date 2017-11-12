@@ -11,7 +11,7 @@ export const PUBLICATIONS = 'publications'
 const FETCH_TREND_REQUEST = 'FETCH_TREND_REQUEST'
 const FETCH_TREND_SUCCESS = 'FETCH_TREND_SUCCESS'
 const FETCH_TREND_FAILURE = 'FETCH_TREND_FAILURE'
-const UPDATE_FILTER = 'UPDATE_FILTER'
+const UPDATE_FILTER = 'UPDATE_TREND_FILTER'
 
 // Reducers
 
@@ -47,10 +47,17 @@ const apiReducer = (state = initialState, action) => {
   }
 }
 
-const filtersReducer = (state = initialState, action) => {
+const initialFilter = {
+  author: undefined,
+  venue: undefined,
+  year: [2000,2017]
+}
+
+const filtersReducer = (state = initialFilter, action) => {
   switch (action.type) {
     case UPDATE_FILTER:
-      const { payload } = action.payload
+      console.log(action);
+      const { payload } = action
       return {
         ...state,
         [payload.key]: payload.value
@@ -78,13 +85,22 @@ export const getGraphData = (state = initialState, categoryKey) => {
 
 // Actions
 
-export const fetchTrend = (resource, venue, author) => ({
-  [CALL_API]: {
-    endpoint: getUrlBuilder(resource)(venue, author),
-    method: 'GET',
-    types: [FETCH_TREND_REQUEST, FETCH_TREND_SUCCESS, FETCH_TREND_FAILURE]
+export const fetchTrend = (resource) => {
+  return (dispatch, getState) => {
+      const { filters } = getState().rank
+
+      dispatch({
+        [CALL_API]: {
+          endpoint: getUrlBuilder(resource)(
+            filters.venue,
+            filters.author
+          ),
+          method: 'GET',
+          types: [FETCH_TREND_REQUEST, FETCH_TREND_SUCCESS, FETCH_TREND_FAILURE]
+        }
+      })
   }
-})
+}
 
 export const updateFilter = (key, value) => ({
   type: UPDATE_FILTER,

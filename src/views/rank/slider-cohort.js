@@ -5,13 +5,14 @@ import 'rc-slider/assets/index.css';
 const TooltipSlider = createSliderWithTooltip(Slider)
 
 const SliderCohort = ({
+  resource,
   onChange,
   onAfterChange,
   cohortValue
 }) => (
   <div>
     <p className='lead'>
-      Top <strong className='text-primary'>{cohortValue}</strong> authors
+      Top <strong className='text-primary'>{cohortValue}</strong> {resource}
     </p>
     <TooltipSlider
       min={5}
