@@ -12,12 +12,20 @@ import './styles.scss'
  */
 class Trend extends Component {
   componentDidMount() {
-    this.loadData()
+    // this.loadAuthors()
+    // this.loadData()
+
+    const { fetchTrend, resource, fetchAuthors } = this.props
+
+    fetchTrend(resource)
+    fetchAuthors()
   }
 
   render() {
     const {
       resource,
+      authors,
+      authorsLoading,
       categories,
       filters,
       title,
@@ -28,8 +36,6 @@ class Trend extends Component {
     const labels = ['Count']
 
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
-
-    const authors = ['jane', 'john', 'tom', 'mary'] //TODO replace with api
 
     return (
       <div>
@@ -52,7 +58,7 @@ class Trend extends Component {
           <Row>
             <Col xs={12} className='mb-4'>
               <SearchbarAuthor
-                authors={authors}
+                authors={authorsLoading ? [] : authors}
                 onChange={val => {updateFilter('author', val)}}
                 onConfirm={() => {this.loadData() }}
               />
@@ -77,6 +83,12 @@ class Trend extends Component {
   onClickSeries = (e) => {
     console.log(`Author: ${e.point.category}, Publications: ${e.point.y}`)
   }
+
+  loadAuthors = () => {
+    console.log('Loading authors...')
+    const { fetchAuthors, resource } = this.props
+    fetchAuthors()
+   }
 
   loadData = () => {
     console.log('Loading data...')

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Trend from '../../views/trend'
-import { fetchTrend, updateFilter, getGraphData } from '../../modules/trend'
+import { fetchTrend, fetchAuthors, updateFilter, getGraphData } from '../../modules/trend'
 
 export default (resource, categoryKey, title) => {
   const mapStateToProps = state => ({
@@ -9,6 +9,8 @@ export default (resource, categoryKey, title) => {
     error: state.trend.error,
     categories: getGraphData(state.trend, categoryKey).categories,
     series: [getGraphData(state.trend, categoryKey).data],
+    authors: state.trend.authorsReducer.authors,
+    authorsLoading : state.trend.authorsReducer.loading,
     filters: state.trend.filters,
     resource,
     title
@@ -16,6 +18,7 @@ export default (resource, categoryKey, title) => {
 
   const mapDispatchToProps = dispatch => bindActionCreators({
     fetchTrend,
+    fetchAuthors,
     updateFilter
   }, dispatch)
 

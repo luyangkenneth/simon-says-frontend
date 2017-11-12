@@ -12,7 +12,7 @@ const SearchbarAuthor = ({
     <HoverPaper className='p-4'>
       <AutoComplete
         fullWidth
-        filter={AutoComplete.caseInsensitiveFilter}
+        filter={AutoComplete.fuzzyFilter}
         dataSource={authors}
         onUpdateInput={onChange}
         onNewRequest={onConfirm}

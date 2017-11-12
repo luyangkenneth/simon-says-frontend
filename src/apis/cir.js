@@ -8,12 +8,13 @@
 
 import { stringify } from 'query-string'
 
-const BASE_URL = 'https://simon-says-backend.herokuapp.com/api'
+const BASE_URL = 'http://localhost:5000/api'
 const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
 const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
 const CITATIONS_BY_YEAR = 'num_citations_by_year'
 const CITATION_WEB = 'citation_network'
+const AUTHORS = 'authors'
 const PUBLICATION_TITLES = 'publication_titles'
 
 /**
@@ -86,6 +87,13 @@ export const citationsByYear = (venue, author) => {
 export const citationWeb = (title, depth = 2) => {
   const params = { title, depth }
   return buildUrl(CITATION_WEB, params)
+}
+
+/**
+ * Get all authors
+ */
+export const authors = () => {
+  return buildUrl(AUTHORS)
 }
 
 /**
