@@ -1,7 +1,6 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
 import {
-  authors,
   citationsByYear,
   publicationsByYear
 } from '../apis/cir'
@@ -12,9 +11,7 @@ export const PUBLICATIONS = 'publications'
 const FETCH_TREND_REQUEST = 'FETCH_TREND_REQUEST'
 const FETCH_TREND_SUCCESS = 'FETCH_TREND_SUCCESS'
 const FETCH_TREND_FAILURE = 'FETCH_TREND_FAILURE'
-const FETCH_AUTHORS_REQUEST = 'FETCH_AUTHORS_REQUEST'
-const FETCH_AUTHORS_SUCCESS = 'FETCH_AUTHORS_SUCCESS'
-const FETCH_AUTHORS_FAILURE = 'FETCH_AUTHORS_FAILURE'
+
 const UPDATE_FILTER = 'UPDATE_TREND_FILTER'
 
 // Reducers
@@ -51,38 +48,6 @@ const apiReducer = (state = initialState, action) => {
   }
 }
 
-const authorsInitialState = {
-  authors: [],
-  loading: true,
-  error: false
-}
-
-const authorsReducer = (state = authorsInitialState, action) => {
-  switch (action.type) {
-    case FETCH_AUTHORS_REQUEST:
-      return {
-        ...state,
-        loading: true
-      }
-
-    case FETCH_AUTHORS_SUCCESS:
-      return {
-        ...state,
-        titles: action.payload,
-        loading: false
-      }
-
-    case FETCH_AUTHORS_FAILURE:
-      return {
-        ...state,
-        error: true
-      }
-
-    default:
-      return state
-  }
-}
-
 const initialFilter = {
   author: undefined,
   venue: undefined,
@@ -105,7 +70,6 @@ const filtersReducer = (state = initialFilter, action) => {
 
 export default combineReducers ({
   filters: filtersReducer,
-  authorsReducer,
   apiReducer
 })
 
@@ -136,16 +100,6 @@ export const fetchTrend = (resource) => {
           types: [FETCH_TREND_REQUEST, FETCH_TREND_SUCCESS, FETCH_TREND_FAILURE]
         }
       })
-  }
-}
-
-export const fetchAuthors = () => {
-  return {
-    [CALL_API]: {
-      endpoint: authors(),
-      method: 'GET',
-      types: [FETCH_AUTHORS_REQUEST, FETCH_AUTHORS_SUCCESS, FETCH_AUTHORS_FAILURE]
-    }
   }
 }
 

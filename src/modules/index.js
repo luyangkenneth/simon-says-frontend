@@ -6,6 +6,7 @@ import citationWeb from './citation-web'
 import trend from './trend'
 import wordcloud from './wordcloud'
 import venues from './venues'
+import authors from './authors'
 
 export default combineReducers({
   routing: routerReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   citationWeb,
   trend,
   venues,
+  authors,
   wordcloud
 })
