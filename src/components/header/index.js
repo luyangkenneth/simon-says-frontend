@@ -11,7 +11,7 @@ import {
 import { NavLink as Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 
-import './styles.scss'
+import './styles.css'
 
 const Header = () => (
   <div className='cir__header mb-3'>
