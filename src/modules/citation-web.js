@@ -1,14 +1,18 @@
 import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
-import { citationWeb } from '../apis/cir'
+import { citationWeb, publicationTitles } from '../apis/cir'
 
 const FETCH_WEB_REQUEST = 'FETCH_WEB_REQUEST'
 const FETCH_WEB_SUCCESS = 'FETCH_WEB_SUCCESS'
 const FETCH_WEB_FAILURE = 'FETCH_WEB_FAILURE'
+const FETCH_TITLES_REQUEST = 'FETCH_TITLES_REQUEST'
+const FETCH_TITLES_SUCCESS = 'FETCH_TITLES_SUCCESS'
+const FETCH_TITLES_FAILURE = 'FETCH_TITLES_FAILURE'
 const SELECT_PUBLICATION = 'SELECT_PUBLICATION'
 const RESET_SELECTED_PUBLICATION = 'RESET_SELECTED_PUBLICATION'
 const CHANGE_DEPTH = 'CHANGE_DEPTH'
-
+const CHANGE_MAX_DEPTH = 'CHANGE_MAX_DEPTH'
+const CHANGE_TITLE = 'CHANGE_TITLE'
 
 // Reducers
 const publicationSelection = (state = '', action) => {
@@ -22,13 +26,13 @@ const publicationSelection = (state = '', action) => {
   }
 }
 
-const apiReducerInitialState = {
+const citationApiReducerInitialState = {
   entities: {},
   loading: true,
   error: false
 }
 
-const apiReducer = (state = apiReducerInitialState, action) => {
+const citationApiReducer = (state = citationApiReducerInitialState, action) => {
   switch (action.type) {
     case FETCH_WEB_REQUEST:
       return {
@@ -54,17 +58,62 @@ const apiReducer = (state = apiReducerInitialState, action) => {
   }
 }
 
-const depthReducerInitialState = {
-  depth: 1,
-  title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
+const titlesApiReducerInitialState = {
+  titles: [],
+  loading: true,
+  error: false
 }
 
-const depthReducer = (state = depthReducerInitialState, action) => {
+const titlesApiReducer = (state = titlesApiReducerInitialState, action) => {
+  switch (action.type) {
+    case FETCH_TITLES_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case FETCH_TITLES_SUCCESS:
+      return {
+        ...state,
+        titles: action.payload,
+        loading: false
+      }
+
+    case FETCH_TITLES_FAILURE:
+      return {
+        ...state,
+        error: true
+      }
+
+    default:
+      return state
+  }
+}
+
+const queryReducerInitialState = {
+  depth: 2,
+  maxDepth: 2,
+  title: ''
+}
+
+const queryReducer = (state = queryReducerInitialState, action) => {
   switch (action.type) {
     case CHANGE_DEPTH:
       return {
         ...state,
         depth: action.payload
+      }
+
+    case CHANGE_MAX_DEPTH:
+      return {
+        ...state,
+        maxDepth: action.payload
+      }
+
+    case CHANGE_TITLE:
+      return {
+        ...state,
+        title: action.payload
       }
 
     default:
@@ -75,8 +124,9 @@ const depthReducer = (state = depthReducerInitialState, action) => {
 
 export default combineReducers({
   selected: publicationSelection,
-  apiReducer,
-  depthReducer
+  citationApiReducer,
+  titlesApiReducer,
+  queryReducer
 })
 
 // Selectors
@@ -89,12 +139,35 @@ export const selectedPublication = (entities, selection) => {
 }
 
 // Actions
-export const fetchCitationWeb = (title, depth) => {
+export const fetchCitationWeb = (queryTitle, queryDepth) => {
+  return (dispatch, getState) => {
+    const { maxDepth, title } = getState().citationWeb.queryReducer
+
+    if (queryTitle !== title || queryDepth > maxDepth) {
+      // update states
+      // call API
+      dispatch(changeMaxDepth(queryDepth))
+      dispatch(changeTitle(queryTitle))
+
+      dispatch({
+        [CALL_API]: {
+          endpoint: citationWeb(queryTitle, queryDepth),
+          method: 'GET',
+          types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+        }
+      })
+    }
+
+    dispatch(changeDepth(queryDepth))
+  }
+}
+
+export const fetchPublicationTitles = () => {
   return {
     [CALL_API]: {
-      endpoint: citationWeb(title, depth),
+      endpoint: publicationTitles(),
       method: 'GET',
-      types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+      types: [FETCH_TITLES_REQUEST, FETCH_TITLES_SUCCESS, FETCH_TITLES_FAILURE]
     }
   }
 }
@@ -108,9 +181,23 @@ export const resetSelectedPublication = () => ({
   type: RESET_SELECTED_PUBLICATION
 })
 
-export const changeDepth = (depth) => {
+const changeDepth = (depth) => {
   return {
     type: CHANGE_DEPTH,
     payload: depth
+  }
+}
+
+const changeMaxDepth = (depth) => {
+  return {
+    type: CHANGE_MAX_DEPTH,
+    payload: depth
+  }
+}
+
+const changeTitle = (title) => {
+  return {
+    type: CHANGE_TITLE,
+    payload: title
   }
 }
