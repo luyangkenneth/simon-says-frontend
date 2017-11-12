@@ -110,8 +110,11 @@ export const updateFilter = (key, value) => ({
 
 // Helpers
 function getSortedData(entities) {
-  const entitiesArray = Object.keys(entities).map(id => entities[id])
-  return entitiesArray.sort((a, b) => a.count < b.count)
+  return Object.keys(entities).map(name => ({
+    name,
+    count: entities[name]
+  }))
+  .sort((a, b) => a.count < b.count)
 }
 
 function getUrlBuilder(resource) {
