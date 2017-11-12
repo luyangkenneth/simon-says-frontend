@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
+import Paper from 'material-ui/Paper'
 
 import Multigraph from '../../components/multigraph'
 import SliderCohort from './slider-cohort'
 import SliderYear from './slider-year'
 import SearchbarVenue from './searchbar-venue'
 
-import './styles.scss'
+import './styles.css'
 
 /**
  * RankView shows the ranking of authors in a single time snapshot.
@@ -58,29 +59,36 @@ class Rank extends Component {
         <Container>
           <Row>
             <Col xs={12}>
-              <SearchbarVenue
-                conferences={conferences}
-                onChange={val => { updateFilter('venue', val) }}
-                onConfirm={() => { this.loadData() }}
-              />
+              <Paper className='p-3 mb-4'>
+                <SearchbarVenue
+                  conferences={conferences}
+                  onChange={val => { updateFilter('venue', val) }}
+                  onConfirm={() => { this.loadData() }}
+                />
+              </Paper>
             </Col>
           </Row>
+
           <Row>
             <Col xs={6}>
-              <SliderYear
-                onChange={val => { updateFilter('year', val) }}
-                onAfterChange={val => { this.loadData() }}
-                yearRange={filters.year}
-                min={2000}
-                max={2017}
-              />
+              <Paper className='p-4'>
+                <SliderYear
+                  onChange={val => { updateFilter('year', val) }}
+                  onAfterChange={val => { this.loadData() }}
+                  yearRange={filters.year}
+                  min={2000}
+                  max={2017}
+                />
+              </Paper>
             </Col>
             <Col xs={6}>
-              <SliderCohort
-                onChange={val => { updateFilter('cohort', val) }}
-                onAfterChange={val => { this.loadData() }}
-                cohortValue={filters.cohort}
-              />
+              <Paper className='p-4'>
+                <SliderCohort
+                  onChange={val => { updateFilter('cohort', val) }}
+                  onAfterChange={val => { this.loadData() }}
+                  cohortValue={filters.cohort}
+                />
+              </Paper>
             </Col>
           </Row>
         </Container>

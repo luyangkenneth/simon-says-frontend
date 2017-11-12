@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 
-import './styles.scss'
+import './styles.css'
 
 class FeatureCard extends Component {
   constructor(props) {
