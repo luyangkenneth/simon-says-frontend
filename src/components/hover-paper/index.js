@@ -10,7 +10,7 @@ class HoverPaper extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, ...props } = this.props
     return (
       <div>
         <Paper
@@ -18,6 +18,7 @@ class HoverPaper extends Component {
           zDepth={this.state.zDepth}
           onMouseOver={() => { this.setState({ zDepth: 2 }) }}
           onMouseOut={() => { this.setState({ zDepth: 1 }) }}
+          {...props}
         >
           {children}
         </Paper>
