@@ -14,6 +14,7 @@ const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
 const CITATIONS_BY_YEAR = 'num_citations_by_year'
 const CITATION_WEB = 'citation_network'
+const PUBLICATION_TITLES = 'publication_titles'
 
 /**
  * Get the top publications by the number of citations they have.
@@ -74,6 +75,13 @@ export const citationsByYear = (venue, author) => {
 export const citationWeb = (title, depth = 2) => {
   const params = { title, depth }
   return buildUrl(CITATION_WEB, params)
+}
+
+/**
+ * Get all publications titles
+ */
+export const publicationTitles = () => {
+  return buildUrl(PUBLICATION_TITLES)
 }
 
 /**
