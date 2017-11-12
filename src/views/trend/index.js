@@ -59,8 +59,11 @@ class Trend extends Component {
             <Col xs={12} className='mb-4'>
               <SearchbarAuthor
                 authors={authorsLoading ? [] : authors}
-                onChange={val => {updateFilter('author', val)}}
-                onConfirm={() => {this.loadData() }}
+                onChange={_ => {}}
+                onConfirm={val => {
+                  updateFilter('author', val)
+                  this.loadData()
+                }}
               />
             </Col>
           </Row>
@@ -86,7 +89,7 @@ class Trend extends Component {
 
   loadAuthors = () => {
     console.log('Loading authors...')
-    const { fetchAuthors, resource } = this.props
+    const { fetchAuthors } = this.props
     fetchAuthors()
    }
 
