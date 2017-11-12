@@ -12,13 +12,8 @@ import './styles.scss'
  */
 class Trend extends Component {
   componentDidMount() {
-    // this.loadAuthors()
-    // this.loadData()
-
-    const { fetchTrend, resource, fetchAuthors } = this.props
-
-    fetchTrend(resource)
-    fetchAuthors()
+    this.loadAuthors()
+    this.loadData()
   }
 
   render() {
