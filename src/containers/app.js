@@ -6,6 +6,7 @@ import getRankView from './rank'
 import CitationWeb from './citation-web'
 import Trend from './trend'
 import getTrendView from './trend'
+import Author from './author'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -51,7 +52,7 @@ const App = () => (
         )}
       />
       <Route exact path="/web" component={CitationWeb} />
-      <Route exact path="/trend" component={Trend} />
+      <Route exact path="/author" component={Author} />
     </main>
 
     <Footer />
