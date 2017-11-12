@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import TextField from 'material-ui/TextField'
-import Paper from 'material-ui/Paper'
 
-import Multigraph from '../../components/multigraph'
 import FeatureCard from './feature-card'
-import { randomInts } from '../../utils/data-generator'
 
 import './styles.css'
 
