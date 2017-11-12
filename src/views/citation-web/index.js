@@ -35,15 +35,17 @@ class CitationWebView extends Component {
 
   componentDidMount() {
     const { fetchCitationWeb, fetchPublicationTitles } = this.props
-    const { title, depth } = this.props
+    const { depth } = this.props
+    const initialTitle = 'Dynamic Power Management for the Iterative Decoding of Turbo Codes'
 
-    fetchCitationWeb(title, depth)
+    fetchCitationWeb(initialTitle, depth)
     fetchPublicationTitles()
   }
 
   render() {
     const {
       entities,
+      title,
       depth,
       titles,
       titlesLoading,
@@ -88,6 +90,8 @@ class CitationWebView extends Component {
                 />
             </Col>
           </Row>
+          <h4>Citation Web</h4>
+          <h5>{!citationLoading ? title : ''}</h5>
           <Row className='mb-3'>
             <Col lg={6}>
               <CitationWeb

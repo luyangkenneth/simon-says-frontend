@@ -91,9 +91,9 @@ const titlesApiReducer = (state = titlesApiReducerInitialState, action) => {
 }
 
 const queryReducerInitialState = {
-  depth: 1,
-  maxDepth: 1,
-  title: "Dynamic Power Management for the Iterative Decoding of Turbo Codes"
+  depth: 2,
+  maxDepth: 2,
+  title: ''
 }
 
 const queryReducer = (state = queryReducerInitialState, action) => {
