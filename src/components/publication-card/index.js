@@ -21,16 +21,16 @@ const PublicationCard = ({
     <h4>Abstract</h4>
     <p>{abstract}</p>
 
-    {authors !== undefined && authors.length > 0 ? 
+    {authors !== undefined && authors.length > 0 ?
       <div className='mb-2'>
         <h4>Authors</h4>
-        {authors.map(a => <span className='mr-1'>{a.name}</span>)}
+        {authors.map(a => <li key={`${title}-${a.name}`}>{a.name}</li>)}
       </div> : null}
 
     {pdfUrls !== undefined && pdfUrls.length > 0 ?
       <div>
         <h4>Download</h4>
-        {pdfUrls.map((url, idx) => <span className='mr-1'><a href={url}>Link {idx + 1}</a></span>)}
+        {pdfUrls.map((url, idx) => <span className='mr-1' key={url}><a href={url}>Link {idx + 1}</a></span>)}
       </div>
       : null
     }
