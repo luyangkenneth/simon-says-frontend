@@ -84,6 +84,7 @@ class Rank extends Component {
             <Col xs={6}>
               <Paper className='p-4'>
                 <SliderCohort
+                  resource={resource}
                   onChange={val => { updateFilter('cohort', val) }}
                   onAfterChange={val => { this.loadData() }}
                   cohortValue={filters.cohort}
