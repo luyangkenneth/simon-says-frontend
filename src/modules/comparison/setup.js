@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
     case SET_YEAR_RANGE:
       return {
         ...state,
-        year: action.payload
+        years: action.payload
       }
     default:
       return state

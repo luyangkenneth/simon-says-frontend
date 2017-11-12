@@ -8,10 +8,12 @@ class Comparison extends Component {
   }
 
   render() {
-    const { authors, allAuthors, setAuthors } = this.props
+    const { authors, allAuthors, setAuthors, years, setYearRange } = this.props
     return (
       <div>
         <Setup
+          setYearRange={setYearRange}
+          years={years}
           authors={allAuthors}
           selectedAuthors={authors}
           setAuthors={setAuthors}

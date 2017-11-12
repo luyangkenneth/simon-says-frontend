@@ -109,10 +109,16 @@ class Setup extends React.Component {
   }
 
   yearSelection = () => {
+    const { years, setYearRange } = this.props
     return (
       <div>
         <p>What year range are you interested in?</p>
-        <SliderYear yearRange={[1900, 2018]} min={1900} max={2018} />
+        <SliderYear
+          yearRange={years}
+          min={1990}
+          max={2017}
+          onChange={val => setYearRange(val[0], val[1])}
+        />
       </div>
     )
   }
