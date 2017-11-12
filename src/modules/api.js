@@ -1,14 +1,22 @@
 import { CALL_API } from 'redux-api-middleware'
 
+const defaultOnSuccess = (state, payload) => ({
+  ...state,
+  loading: false,
+  data: payload
+})
+
 /**
  * Returns a fetch API reducer.
  *
  * @param {string} resource - name of resource that we are fetching
  * @param {Object} defaultData - either an array or an object
+ * @param {function} onSuccess - takes in payload and current state, and
+ *  returns a new state
  *
  * @return {function} reducer - capable of handling API requests
  */
-export const createAPIReducer = (resource, defaultData) => {
+export const createAPIReducer = (resource, defaultData, onSuccess = defaultOnSuccess) => {
   const initialState = {
     loading: false,
     error: false,
@@ -23,11 +31,7 @@ export const createAPIReducer = (resource, defaultData) => {
           loading: true
         }
       case `FETCH_${resource.toUpperCase()}_SUCCESS`:
-        return {
-          ...state,
-          loading: false,
-          data: action.payload
-        }
+        return onSuccess(state, action.payload)
       case `FETCH_${resource.toUpperCase()}_FAILURE`:
         return {
           ...state,
