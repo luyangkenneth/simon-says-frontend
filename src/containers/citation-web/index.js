@@ -4,27 +4,38 @@ import CitationWeb from '../../views/citation-web'
 import {
   fetchCitationWeb,
   fetchPublicationTitles,
+  fetchPublications,
   selectPublication,
   resetSelectedPublication,
   selectedPublication
 } from '../../modules/citation-web'
 
-const mapStateToProps = state => ({
-  citationLoading: state.citationWeb.citationApiReducer.loading,
-  citationError: state.citationWeb.citationApiReducer.error,
-  entities: state.citationWeb.citationApiReducer.entities,
-  titlesLoading: state.citationWeb.titlesApiReducer.loading,
-  titlesError: state.citationWeb.titlesApiReducer.error,
-  titles: state.citationWeb.titlesApiReducer.titles,
-  selected: selectedPublication(state.citationWeb.citationApiReducer.entities,
-                                state.citationWeb.selected),
-  depth: state.citationWeb.queryReducer.depth,
-  title: state.citationWeb.queryReducer.title
-})
+const mapStateToProps = state => {
+  const citationWeb = state.citationWeb
+  const citationReducer = citationWeb.citationApiReducer
+  const titlesApiReducer = citationWeb.titlesApiReducer
+  const publicationsApiReducer = citationWeb.publicationsApiReducer
+  const queryReducer = citationWeb.queryReducer
+
+  return {
+    citationLoading: citationReducer.loading,
+    citationError: citationReducer.error,
+    entities: citationReducer.entities,
+    titlesLoading: titlesApiReducer.loading,
+    titlesError: titlesApiReducer.error,
+    titles: titlesApiReducer.titles,
+    publicationsLoading: publicationsApiReducer.loading,
+    selected: selectedPublication(publicationsApiReducer.publications,
+                                  citationWeb.selected),
+    depth: queryReducer.depth,
+    title: queryReducer.title
+  }
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchCitationWeb,
   fetchPublicationTitles,
+  fetchPublications,
   selectPublication,
   resetSelectedPublication
 }, dispatch)
