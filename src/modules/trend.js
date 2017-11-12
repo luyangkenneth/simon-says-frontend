@@ -57,7 +57,6 @@ const initialFilter = {
 const filtersReducer = (state = initialFilter, action) => {
   switch (action.type) {
     case UPDATE_FILTER:
-      console.log(action);
       const { payload } = action
       return {
         ...state,
