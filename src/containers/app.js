@@ -3,9 +3,8 @@ import { Route } from 'react-router-dom'
 
 import Home from './home'
 import getRankView from './rank'
-import CitationWeb from './citation-web'
 import getTrendView from './trend'
-import Author from './author'
+import CitationWeb from './citation-web'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -51,7 +50,6 @@ const App = () => (
         )}
       />
       <Route exact path="/web" component={CitationWeb} />
-      <Route exact path="/author" component={Author} />
     </main>
 
     <Footer />
