@@ -15,24 +15,7 @@ import Loader from '../../components/loader'
 
 import './styles.css'
 
-
-/**
- * CitationWebView creates a force directed graph of the citations between
- * publications. The current implementation is depth limited to 2. However we
- * should be able to extend this to meet requirements of deeper graphs 2. (by
- * passing it as a prop etc.)
- *
- * The current implementation also makes heavy use of react-vis-force, a force
- * directed graph library by Uber.
- *
- */
 class CitationWebView extends Component {
-  publicationTitles = [
-    'Dynamic Power Management for the Iterative Decoding of Turbo Codes',
-    'Designing Very Good Low-density Parity-check Codes for the Gilbert-elliott Channel',
-    'Opportunistic Error Correction for MIMO-OFDM: From Theory to Practice'
-  ]
-
   componentDidMount() {
     const { fetchCitationWeb, fetchPublicationTitles } = this.props
     const { depth } = this.props
@@ -141,6 +124,9 @@ class CitationWebView extends Component {
     resetSelectedPublication()
   }
 
+  /**
+   * Fetch data for title change
+   */
   handleNewRequest = (chosenRequest, index) => {
     const { fetchCitationWeb, depth, titles } = this.props
 
@@ -151,6 +137,9 @@ class CitationWebView extends Component {
     fetchCitationWeb(chosenRequest, depth)
   }
 
+  /**
+   * Fetch data for depth change
+   */
   handleSliderChange = (event, newValue) => {
     const { fetchCitationWeb, title } = this.props
 
