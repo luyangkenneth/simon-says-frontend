@@ -34,6 +34,7 @@ const reducer = (state = initialState, action) => {
 // Selectors
 export const getAuthors = (state) => state.authors
 export const getYearRange = (state) => state.years
+export const completedSetup = (state) => state.complete
 
 // Actions
 export const setAuthors = (authors) => ({

@@ -31,6 +31,24 @@ export const fetchPublicationTrend = author => {
   )
 }
 
+// Selectors
+export const getCategories = (state) => {
+  const keys = Object.keys(state.data)
+  if (keys.length === 0) {
+    return []
+  }
+
+  return Object.keys(state.data[keys[0]])
+}
+
+export const getSeries = (state) => {
+  return Object.keys(state.data)
+    .map(name => ({
+      name,
+      data: Object.keys(state.data[name]).map(id => state.data[name][id])
+    }))
+}
+
 
 export default combineReducers({
   bank: reducer,

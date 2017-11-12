@@ -7,10 +7,13 @@ import {
   setYearRange,
   getAuthors,
   getYearRange,
-  completeSetup
+  completeSetup,
+  completedSetup
 } from '../../modules/comparison/setup'
 import {
-  fetchPublicationTrend
+  fetchPublicationTrend,
+  getCategories,
+  getSeries
 } from '../../modules/comparison'
 import {
   getAllAuthors,
@@ -20,7 +23,12 @@ import {
 const mapStateToProps = state => ({
   authors: getAuthors(state.comparison.setup),
   years: getYearRange(state.comparison.setup),
-  allAuthors: getAllAuthors(state.authors)
+  completedSetup: completedSetup(state.comparison.setup),
+  allAuthors: getAllAuthors(state.authors),
+  loading: state.comparison.bank.loading,
+  data: state.comparison.bank.data,
+  categories: getCategories(state.comparison.bank),
+  series: getSeries(state.comparison.bank)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
