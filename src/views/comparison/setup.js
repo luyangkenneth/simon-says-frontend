@@ -21,13 +21,15 @@ import SliderYear from '../rank/slider-year'
 class Setup extends React.Component {
 
   state = {
-    stepIndex: 0,
+    stepIndex: 0
   }
 
   handleNext = () => {
     const {stepIndex} = this.state
     if (stepIndex < 2) {
       this.setState({stepIndex: stepIndex + 1})
+    } else {
+      // TODO: Trigger the fetch for data!
     }
   }
 
