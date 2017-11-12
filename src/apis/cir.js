@@ -15,6 +15,7 @@ const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
 const CITATIONS_BY_YEAR = 'num_citations_by_year'
 const CITATION_WEB = 'citation_network'
 const PUBLICATION_TITLES = 'publication_titles'
+const VENUES = 'venues'
 
 /**
  * Get the top publications by the number of citations they have.
@@ -94,6 +95,11 @@ export const citationWeb = (title, depth = 2) => {
 export const publicationTitles = () => {
   return buildUrl(PUBLICATION_TITLES)
 }
+
+/**
+ * Get all available venues
+ */
+export const venues = () => buildUrl(VENUES)
 
 /**
  * (HELPER)

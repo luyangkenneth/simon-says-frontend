@@ -18,6 +18,7 @@ import './styles.css'
 class Rank extends Component {
   componentDidMount() {
     this.loadData()
+    this.loadVenues()
   }
 
   render() {
@@ -27,6 +28,7 @@ class Rank extends Component {
       filters,
       title,
       series,
+      venues,
       updateFilter
     } = this.props
 
@@ -34,9 +36,6 @@ class Rank extends Component {
 
     // TODO: This can be moved out into a selector
     const yValues = series.map((s, idx) => ({ name: labels[idx], data: s }))
-
-    // TODO: Fetch this from backend
-    const conferences = ['AAAI', 'NIPS', 'AIML', 'AIMA']
 
     return (
       <div>
@@ -59,7 +58,7 @@ class Rank extends Component {
           <Row>
             <Col xs={12} className='mb-4'>
               <SearchbarVenue
-                conferences={conferences}
+                conferences={venues.venues}
                 onChange={val => { updateFilter('venue', val) }}
                 onConfirm={() => { this.loadData() }}
               />
@@ -100,6 +99,12 @@ class Rank extends Component {
     console.log('Loading data...')
     const { fetchRank, resource } = this.props
     fetchRank(resource)
+  }
+
+  loadVenues = () => {
+    console.log('Loading venues...')
+    const { fetchVenues } = this.props
+    fetchVenues()
   }
 }
 

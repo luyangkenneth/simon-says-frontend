@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Rank from '../../views/rank'
-import { fetchRank, updateFilter, getGraphData } from '../../modules/rank'
+import { fetchRank, fetchVenues, updateFilter, getGraphData } from '../../modules/rank'
 
 
 export default (resource, categoryKey, title) => {
@@ -11,12 +11,14 @@ export default (resource, categoryKey, title) => {
     categories: getGraphData(state.rank, categoryKey).categories,
     series: [getGraphData(state.rank, categoryKey).data],
     filters: state.rank.filters,
+    venues: state.rank.venues,
     resource,
     title
   })
 
   const mapDispatchToProps = dispatch => bindActionCreators({
     fetchRank,
+    fetchVenues,
     updateFilter
   }, dispatch)
 
