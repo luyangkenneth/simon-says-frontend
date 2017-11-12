@@ -8,7 +8,7 @@
 
 import { stringify } from 'query-string'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://simon-says-backend.herokuapp.com/api'
 const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
 const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
@@ -24,7 +24,12 @@ const PUBLICATION_TITLES = 'publication_titles'
  * - top (Number): get the top N authors
  */
 export const topPublicationsByCitations = (venue, top, years) => {
-  const params = { venue, top, years }
+  const params = {
+    venue,
+    top,
+    start_year: years[0],
+    end_year: years[1]
+  }
   return buildUrl(TOP_PUBLICATIONS_BY_CITATIONS, params)
 }
 
@@ -36,7 +41,13 @@ export const topPublicationsByCitations = (venue, top, years) => {
  * - top (Number): get the top N authors
  */
 export const topAuthorsByPublications = (venue, top, years) => {
-  const params = { venue, top, years }
+  const params = {
+    venue,
+    top,
+    years,
+    start_year: years[0],
+    end_year: years[1]
+  }
   return buildUrl(TOP_AUTHORS_BY_PUBLICATIONS, params)
 }
 
