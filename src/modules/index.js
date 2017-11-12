@@ -7,6 +7,7 @@ import trend from './trend'
 import wordcloud from './wordcloud'
 import venues from './venues'
 import authors from './authors'
+import comparison from './comparison'
 
 export default combineReducers({
   routing: routerReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   trend,
   venues,
   authors,
-  wordcloud
+  wordcloud,
+  comparison
 })

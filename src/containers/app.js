@@ -5,8 +5,8 @@ import Home from './home'
 import getRankView from './rank'
 import getTrendView from './trend'
 import CitationWeb from './citation-web'
+import Comparison from './comparison'
 import Header from '../components/header'
-import Footer from '../components/footer'
 
 import { AUTHORS, PUBLICATIONS } from '../modules/rank'
 
@@ -49,10 +49,12 @@ const App = () => (
           'Top 10 Authors Ranked by Publications'
         )}
       />
+      <Route
+        exact path="/comparison"
+        component={Comparison}
+      />
       <Route exact path="/web" component={CitationWeb} />
     </main>
-
-    <Footer />
   </div>
 )
 
