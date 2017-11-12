@@ -44,7 +44,7 @@ class Trend extends Component {
             <Col xs={12}>
               <Multigraph
                 type='line'
-                title='test title'
+                title={title}
                 xTitle={resource}
                 xValues={categories}
                 yTitle={'count'}

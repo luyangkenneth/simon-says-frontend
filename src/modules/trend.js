@@ -161,7 +161,6 @@ function getSortedData(entities) {
 }
 
 function getUrlBuilder(resource) {
-  let endpoint;
   switch (resource) {
     case CITATIONS:
       return citationsByYear

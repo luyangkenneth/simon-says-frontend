@@ -3,7 +3,6 @@ import {
   Container,
   Row,
   Col,
-  Button,
 } from 'reactstrap'
 import {
   AutoComplete,
@@ -11,7 +10,6 @@ import {
 } from 'material-ui'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
-import Loader from '../../components/loader'
 
 import './styles.css'
 

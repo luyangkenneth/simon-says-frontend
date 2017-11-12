@@ -12,6 +12,7 @@ const SearchbarVenue = ({
     <HoverPaper className='p-4'>
       <AutoComplete
         fullWidth
+        maxSearchResults={10}
         filter={AutoComplete.caseInsensitiveFilter}
         dataSource={conferences}
         onUpdateInput={onChange}

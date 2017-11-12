@@ -2,7 +2,8 @@ import { CALL_API } from 'redux-api-middleware'
 import { combineReducers } from 'redux'
 import {
   topAuthorsByPublications,
-  topPublicationsByCitations
+  topPublicationsByCitations,
+  venues
 } from '../apis/cir'
 
 export const AUTHORS = 'authors'
@@ -12,6 +13,10 @@ const FETCH_RANK_REQUEST = 'FETCH_RANK_REQUEST'
 const FETCH_RANK_SUCCESS = 'FETCH_RANK_SUCCESS'
 const FETCH_RANK_FAILURE = 'FETCH_RANK_FAILURE'
 const UPDATE_FILTER = 'UPDATE_RANK_FILTER'
+
+const FETCH_VENUES_REQUEST = 'FETCH_VENUE_REQUEST'
+const FETCH_VENUES_SUCCESS = 'FETCH_VENUE_SUCCESS'
+const FETCH_VENUES_FAILURE = 'FETCH_VENUE_FAILURE'
 
 // Reducers
 
@@ -47,6 +52,36 @@ const apiReducer = (state = initialState, action) => {
   }
 }
 
+const initialVenues = {
+  loading: false,
+  error: false,
+  venues: []
+}
+
+const venuesReducer = (state = initialVenues, action) => {
+  switch (action.type) {
+    case FETCH_VENUES_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case FETCH_VENUES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        venues: action.payload
+      }
+    case FETCH_VENUES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: true
+      }
+    default:
+      return state
+  }
+}
+
 const initialFilters = {
   venue: undefined,
   year: [2000, 2017],
@@ -56,7 +91,6 @@ const initialFilters = {
 const filtersReducer = (state = initialFilters, action) => {
   switch (action.type) {
     case UPDATE_FILTER:
-      console.log(action);
       const { payload } = action
       return {
         ...state,
@@ -69,6 +103,7 @@ const filtersReducer = (state = initialFilters, action) => {
 
 export default combineReducers({
   filters: filtersReducer,
+  venues: venuesReducer,
   apiReducer
 })
 
@@ -103,6 +138,16 @@ export const fetchRank = (resource) => {
   }
 }
 
+export const fetchVenues = (resource) => {
+  return {
+    [CALL_API]: {
+      endpoint: venues(),
+      method: 'GET',
+      types: [FETCH_VENUES_REQUEST, FETCH_VENUES_SUCCESS, FETCH_VENUES_FAILURE]
+    }
+  }
+}
+
 export const updateFilter = (key, value) => ({
   type: UPDATE_FILTER,
   payload: { key, value }
@@ -110,8 +155,11 @@ export const updateFilter = (key, value) => ({
 
 // Helpers
 function getSortedData(entities) {
-  const entitiesArray = Object.keys(entities).map(id => entities[id])
-  return entitiesArray.sort((a, b) => a.count < b.count)
+  return Object.keys(entities).map(name => ({
+    name,
+    count: entities[name]
+  }))
+  .sort((a, b) => a.count < b.count)
 }
 
 function getUrlBuilder(resource) {
