@@ -55,7 +55,7 @@ class CitationWebView extends Component {
             <Col lg={6}>
               <AutoComplete
                 dataSource={titlesLoading ? [] : titles}
-                filter={AutoComplete.fuzzyFilter}
+                filter={AutoComplete.caseInsensitiveFilter}
                 onNewRequest={this.handleNewRequest}
                 hintText={'Search by title'}
                 floatingLabelText={'Search by title'}
