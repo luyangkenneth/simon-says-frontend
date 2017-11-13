@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import TextField from 'material-ui/TextField'
 
 import FeatureCard from './feature-card'
 
@@ -32,15 +31,6 @@ class Home extends Component {
                   </Button>
                 </a>
               </Jumbotron>
-            </Col>
-          </Row>
-          <Row className='mb-3'>
-            <Col xs={12}>
-              <h2 className='text-primary'>Search</h2>
-              <TextField
-                fullWidth
-                hintText='Search for authors or publications.'
-              />
             </Col>
           </Row>
           <Row className='mb-3'>
