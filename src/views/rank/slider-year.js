@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider, { createSliderWithTooltip } from 'rc-slider'
-import 'rc-slider/assets/index.css';
+import 'rc-slider/assets/index.css'
 
 import HoverPaper from '../../components/hover-paper'
 

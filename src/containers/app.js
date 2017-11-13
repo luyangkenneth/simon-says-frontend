@@ -3,11 +3,10 @@ import { Route } from 'react-router-dom'
 
 import Home from './home'
 import getRankView from './rank'
-import CitationWeb from './citation-web'
 import getTrendView from './trend'
-import Author from './author'
+import CitationWeb from './citation-web'
+import Comparison from './comparison'
 import Header from '../components/header'
-import Footer from '../components/footer'
 
 import { AUTHORS, PUBLICATIONS } from '../modules/rank'
 
@@ -29,7 +28,7 @@ const App = () => (
         exact path="/rank/authors"
         component={getRankView(
           AUTHORS,
-          'name',
+          'author',
           (cohort) => (`Top ${cohort} authors by publications`)
         )}
       />
@@ -50,11 +49,12 @@ const App = () => (
           'Top 10 Authors Ranked by Publications'
         )}
       />
+      <Route
+        exact path="/comparison"
+        component={Comparison}
+      />
       <Route exact path="/web" component={CitationWeb} />
-      <Route exact path="/author" component={Author} />
     </main>
-
-    <Footer />
   </div>
 )
 
