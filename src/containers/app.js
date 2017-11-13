@@ -28,7 +28,7 @@ const App = () => (
         exact path="/rank/authors"
         component={getRankView(
           AUTHORS,
-          'name',
+          'author',
           (cohort) => (`Top ${cohort} authors by publications`)
         )}
       />
