@@ -17,7 +17,7 @@ class CitationWebView extends Component {
   componentDidMount() {
     const { fetchCitationWeb, fetchPublicationTitles } = this.props
     const { depth, titles } = this.props
-    const initialTitle = 'Dynamic Power Management for the Iterative Decoding of Turbo Codes'
+    const initialTitle = 'Low-density parity check codes over GF(q)'
 
     fetchCitationWeb(initialTitle, depth)
 
