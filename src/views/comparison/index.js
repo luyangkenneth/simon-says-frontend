@@ -23,9 +23,6 @@ class Comparison extends Component {
       series
     } = this.props
 
-    console.log(categories);
-    console.log(series);
-
     return (
       <div>
         {completedSetup ?

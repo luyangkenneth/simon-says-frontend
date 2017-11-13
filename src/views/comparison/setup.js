@@ -7,7 +7,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 
-import AuthorTable from './author-table'
+import SearchAuthors from './search-authors'
 import SliderYear from '../rank/slider-year'
 
 /**
@@ -92,6 +92,7 @@ class Setup extends React.Component {
             />
             <RaisedButton
               label="Next"
+              disabled={this.props.selectedAuthors.length === 0}
               primary={true}
               onClick={this.handleNext}
             />
@@ -106,10 +107,10 @@ class Setup extends React.Component {
     return (
       <div>
         <p>Which authors would you like to see?</p>
-        <AuthorTable
+        <SearchAuthors
+          selectedAuthors={selectedAuthors}
           authors={authors}
           setAuthors={setAuthors}
-          selectedAuthors={selectedAuthors}
         />
       </div>
     )
