@@ -50,6 +50,8 @@ class CitationWebView extends Component {
       }
     }
 
+    console.log(entities)
+
     return (
       <div>
         <Container>
@@ -92,6 +94,7 @@ class CitationWebView extends Component {
                   simulationOptions={simulationOptions}
                   onSelectNode={this.showPublication}
                   onDeselectNode={this.hidePublication}
+                  defaultSelectedNode={this.defaultNode()}
                   data={entities}
                   />
               }
@@ -169,6 +172,22 @@ class CitationWebView extends Component {
 
     resetSelectedPublication()
     fetchCitationWeb(title, newValue)
+  }
+
+  /**
+   * Returns the query publication node id for default selection
+   */
+  defaultNode = () => {
+    const { entities, title } = this.props
+    const pub_ids = Object.keys(entities)
+
+    const res = pub_ids.filter(id => entities[id].title === title)
+
+    if (pub_ids.length > 0) {
+      return { id: pub_ids[0] }
+    } else {
+      return { id: '' }
+    }
   }
 }
 
