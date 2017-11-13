@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AutoComplete from 'material-ui/AutoComplete'
 
+import HoverPaper from '../../components/hover-paper'
 import Pills from './pills'
 
 /**
@@ -15,15 +16,17 @@ class SearchAuthors extends Component {
         <Pills
           selected={selectedAuthors}
         />
-        <AutoComplete
-          ref={c => this.autoComplete = c}
-          fullWidth
-          maxSearchResults={10}
-          filter={AutoComplete.caseInsensitiveFilter}
-          dataSource={authors.filter(author => !selectedAuthors.includes(author))}
-          onNewRequest={this.selectAuthor}
-          floatingLabelText='Search author names'
-        />
+        <HoverPaper className='p-4'>
+          <AutoComplete
+            ref={c => this.autoComplete = c}
+            fullWidth
+            maxSearchResults={10}
+            filter={AutoComplete.caseInsensitiveFilter}
+            dataSource={authors.filter(author => !selectedAuthors.includes(author))}
+            onNewRequest={this.selectAuthor}
+            floatingLabelText='Search author names'
+          />
+        </HoverPaper>
       </div>
     )
   }
