@@ -12,6 +12,7 @@ import { CircleLoader } from 'react-spinners'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
 import Loader from '../../components/loader'
+import HoverPaper from '../../components/hover-paper'
 
 import './styles.css'
 
@@ -50,38 +51,39 @@ class CitationWebView extends Component {
       }
     }
 
-    console.log(entities)
-
     return (
       <div>
         <Container>
           <Row>
             <Col lg={6}>
-              <AutoComplete
-                dataSource={titlesLoading ? [] : titles}
-                filter={AutoComplete.caseInsensitiveFilter}
-                onNewRequest={this.handleNewRequest}
-                hintText={'Search by title'}
-                floatingLabelText={'Search by title'}
-                maxSearchResults={10}
-                fullWidth={true}
-                animated={false}
-                disableFocusRipple={false}
-                />
+              <HoverPaper className='p-4'>
+                <AutoComplete
+                  dataSource={titlesLoading ? [] : titles}
+                  filter={AutoComplete.caseInsensitiveFilter}
+                  onNewRequest={this.handleNewRequest}
+                  hintText={'Search by title'}
+                  floatingLabelText={'Search by title'}
+                  maxSearchResults={10}
+                  fullWidth={true}
+                  animated={false}
+                  disableFocusRipple={false}
+                  />
+              </HoverPaper>
             </Col>
             <Col lg={6}>
-              <h4>Depth of web: {depth}</h4>
-              <Slider
-                min={1}
-                max={5}
-                step={1}
-                defaultValue={2}
-                value={depth}
-                onChange={this.handleSliderChange}
-                />
+              <HoverPaper className='p-4'>
+                <p>Depth of web: <span className='text-primary'>{depth}</span></p>
+                <Slider
+                  min={1}
+                  max={5}
+                  step={1}
+                  defaultValue={2}
+                  value={depth}
+                  onChange={this.handleSliderChange}
+                  />
+              </HoverPaper>
             </Col>
           </Row>
-          <h4>Citation Web</h4>
           <Row className='mb-3'>
             <Col lg={6}>
               <Loader loading={citationLoading}>
