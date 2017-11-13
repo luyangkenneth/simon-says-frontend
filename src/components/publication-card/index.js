@@ -30,7 +30,7 @@ const PublicationCard = ({
     {pdfUrls !== undefined && pdfUrls.length > 0 ?
       <div>
         <h4>Download</h4>
-        {pdfUrls.map((url, idx) => <span className='mr-1' key={url}><a href={url}>Link {idx + 1}</a></span>)}
+        {pdfUrls.map((url, idx) => <span className='mr-1' key={url}><a href={url}>{idx === 0 ? '' : '|'} Link {idx + 1}</a></span>)}
       </div>
       : null
     }
