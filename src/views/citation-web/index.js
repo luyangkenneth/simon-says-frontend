@@ -61,6 +61,8 @@ class CitationWebView extends Component {
                 floatingLabelText={'Search by title'}
                 maxSearchResults={10}
                 fullWidth={true}
+                animated={false}
+                disableFocusRipple={false}
                 />
             </Col>
             <Col lg={6}>
