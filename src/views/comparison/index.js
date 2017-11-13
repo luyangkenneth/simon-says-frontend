@@ -30,7 +30,7 @@ class Comparison extends Component {
       <div>
         {completedSetup ?
           <Loader loading={loading}>
-            <Multigraph 
+            <Multigraph
               type='line'
               xValues={categories}
               yValues={series}
