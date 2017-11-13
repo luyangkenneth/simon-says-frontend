@@ -11,6 +11,7 @@ import {
 import { CircleLoader } from 'react-spinners'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
+import Loader from '../../components/loader'
 
 import './styles.css'
 
@@ -84,10 +85,7 @@ class CitationWebView extends Component {
               {citationLoading
                 ?
                   <div>
-                    <CircleLoader
-                      color='#123abc'
-                      size={100}
-                    />
+                    <Loader loading={citationLoading}></Loader>
                   </div>
                 : <CitationWeb
                   zoom
