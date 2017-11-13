@@ -82,11 +82,10 @@ class CitationWebView extends Component {
             <Col lg={6}>
               <CitationWeb
                 zoom
-                highlightDependencies
                 simulationOptions={simulationOptions}
                 onSelectNode={this.showPublication}
                 onDeselectNode={this.hidePublication}
-                data={entities}
+                data={citationLoading ? [] : entities}
                 />
             </Col>
             <Col lg={6} className='my-auto'>
