@@ -16,11 +16,14 @@ import './styles.css'
 class CitationWebView extends Component {
   componentDidMount() {
     const { fetchCitationWeb, fetchPublicationTitles } = this.props
-    const { depth } = this.props
+    const { depth, titles } = this.props
     const initialTitle = 'Dynamic Power Management for the Iterative Decoding of Turbo Codes'
 
     fetchCitationWeb(initialTitle, depth)
-    fetchPublicationTitles()
+
+    if (titles.length === 0) {
+      fetchPublicationTitles()
+    }
   }
 
   render() {
