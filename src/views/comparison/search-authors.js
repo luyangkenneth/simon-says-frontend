@@ -13,16 +13,18 @@ class SearchAuthors extends Component {
 
     return (
       <div>
-        <Pills
-          selected={selectedAuthors}
-          onDelete={value => () => {
-            setAuthors(selectedAuthors.filter(author => author !== value))
-          }}
-        />
         <HoverPaper className='p-4'>
+          <Pills
+            className='mb-4'
+            selected={selectedAuthors}
+            onDelete={value => () => {
+              setAuthors(selectedAuthors.filter(author => author !== value))
+            }}
+          />
           <AutoComplete
             ref={c => this.autoComplete = c}
             fullWidth
+            filter={AutoComplete.caseInsensitiveFilter}
             maxSearchResults={10}
             dataSource={authors.filter(author => !selectedAuthors.includes(author))}
             onNewRequest={this.selectAuthor}

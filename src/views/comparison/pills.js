@@ -4,12 +4,16 @@ import uuidv4 from 'uuid/v4'
 
 const Pills = ({
   selected,
-  onDelete
+  onDelete,
+  ...props
 }) => (
-  <div style={{
-    display: 'flex',
-    flexWrap: 'wrap',
-  }}>
+  <div 
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+    }}
+    {...props}
+  >
     {selected.map(author => (
       <Chip
         key={uuidv4()}
