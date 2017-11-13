@@ -115,9 +115,13 @@ class CitationWebView extends Component {
    * Shows a publication's detail given its node in the graph.
    */
   showPublication = (event, node) => {
-    const { selectPublication, fetchPublications } = this.props
-    fetchPublications(node.id)
+    const { selectPublication, fetchPublications, publications } = this.props
+
     selectPublication(node.id)
+
+    if (!(node.id in publications)) {
+      fetchPublications(node.id)
+    }
   }
 
   /**

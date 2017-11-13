@@ -24,6 +24,7 @@ const mapStateToProps = state => {
     titlesLoading: titlesApiReducer.loading,
     titlesError: titlesApiReducer.error,
     titles: titlesApiReducer.titles,
+    publications: publicationsApiReducer.publications,
     publicationsLoading: publicationsApiReducer.loading,
     selected: selectedPublication(publicationsApiReducer.publications,
                                   citationWeb.selected),
