@@ -27,7 +27,7 @@ has not been ejected yet.
 
 We make use of [React](https://reactjs.org/) to implement our UI components,
 and [Redux](https://github.com/reactjs/redux) to manage state and data in this
-application. Styling and theming are implemented in SASS, and compiled with
+application. Styling and theming are implemented in SCSS, and compiled with
 `node-sass`.
 
 The entire application is bundled with Webpack to be distributed as a
@@ -42,10 +42,10 @@ responses are defined in `db.json` and `routes.json` respectively. Refer to the
 This removes the dependency on a backend application during prototyping
 and development of the frontend application.
 
-### Test Cases
-
-Work-in-Progress.
-
 ## Deployment
 
-Work-in-Progress.
+The application is currently deployed to
+[Heroku](https://simon-says-frontend.herokuapp.com).
+Due to the limited amount of money and resources that we poor students have,
+we are only able to upload 80,000 of the dataset onto our backend Heroku
+instance. Therefore the data is not as complete as the full dataset.
