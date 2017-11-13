@@ -82,7 +82,7 @@ const titlesApiReducer = (state = titlesApiReducerInitialState, action) => {
     case FETCH_TITLES_SUCCESS:
       return {
         ...state,
-        titles: action.payload,
+        titles: makePresentable(action.payload),
         loading: false
       }
 
@@ -260,3 +260,9 @@ const changeTitle = (title) => {
 }
 
 const getPublicationId = publication => (publication['publication_id'])
+
+const makePresentable = titles => {
+  return titles.map(title => title.trim())
+    .map(title => title.replace(/[\n|\t|\r| ]+/, ' '))
+    .sort()
+}
