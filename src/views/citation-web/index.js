@@ -133,7 +133,15 @@ class CitationWebView extends Component {
    * Fetch data for title change
    */
   handleNewRequest = (chosenRequest, index) => {
-    const { fetchCitationWeb, depth, titles } = this.props
+    console.log('handleNewRequest')
+    const {
+      fetchCitationWeb,
+      resetSelectedPublication,
+      depth,
+      titles
+    } = this.props
+
+    resetSelectedPublication()
 
     if (!titles.includes(chosenRequest)) {
       return
