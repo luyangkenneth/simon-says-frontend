@@ -76,7 +76,6 @@ class CitationWebView extends Component {
             </Col>
           </Row>
           <h4>Citation Web</h4>
-          <h5>{!citationLoading ? title : ''}</h5>
           <Row className='mb-3'>
             <Col lg={6}>
               <CitationWeb
