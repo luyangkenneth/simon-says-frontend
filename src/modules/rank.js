@@ -69,7 +69,7 @@ export const updateFilter = (key, value) => ({
 function getSortedData(data) {
   return Object.keys(data)
     .map(id => data[id])
-    .sort((a, b) => a.count < b.count)
+    .sort((a, b) => b.count - a.count)
 }
 
 function getUrlBuilder(resource) {

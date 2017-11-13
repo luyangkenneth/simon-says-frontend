@@ -20,13 +20,8 @@ class Home extends Component {
                   webs of your favorite papers.
                 </p>
                 <hr className="my-2" />
-                <Link to='/web'>
-                  <Button className="mr-1" color="info">
-                    Get Started
-                  </Button>
-                </Link>
                 <a href='http://labs.semanticscholar.org/corpus/'>
-                  <Button color="secondary">
+                  <Button color="info">
                     Open Research Corpus Dataset
                   </Button>
                 </a>
@@ -37,7 +32,9 @@ class Home extends Component {
             <Col xs={12} className='mb-3'>
               <h2 className='text-primary'>Explore Visualizations</h2>
             </Col>
-            <Col xs={4}>
+          </Row>
+          <Row className='equal-heights'>
+            <Col xs={3}>
               <Link style={{ textDecoration: 'none' }} to='/rank/publications'>
                 <FeatureCard
                   logo='star'
@@ -46,7 +43,7 @@ class Home extends Component {
                 />
               </Link>
             </Col>
-            <Col xs={4}>
+            <Col xs={3}>
               <Link style={{ textDecoration: 'none' }} to='/trend/publications'>
                 <FeatureCard
                   logo='chart-bars'
@@ -55,7 +52,16 @@ class Home extends Component {
                 />
               </Link>
             </Col>
-            <Col xs={4}>
+            <Col xs={3}>
+              <Link style={{ textDecoration: 'none' }} to='/comparison'>
+                <FeatureCard
+                  logo='users'
+                  title='Compare'
+                  description='Compare publication trends between authors.'
+                />
+              </Link>
+            </Col>
+            <Col xs={3}>
               <Link style={{ textDecoration: 'none' }} to='/web'>
                 <FeatureCard
                   logo='rocket'
