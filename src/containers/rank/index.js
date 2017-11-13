@@ -18,6 +18,7 @@ export default (resource, categoryKey, title) => {
     series: [getGraphData(state.rank, categoryKey).data],
     filters: state.rank.filters,
     venues: getAllVenues(state.venues),
+    loading: state.rank.api.loading,
     resource,
     title
   })

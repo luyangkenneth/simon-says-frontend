@@ -49,5 +49,8 @@ $enable-hover-media-query:  false !default;
 $enable-grid-classes:       true !default;
 $enable-print-styles:       true !default;
 
+body {
+  padding-bottom: 10em;
+}
 
 @import 'node_modules/bootstrap/scss/bootstrap'
