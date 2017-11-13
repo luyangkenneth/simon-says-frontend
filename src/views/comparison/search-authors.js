@@ -24,7 +24,6 @@ class SearchAuthors extends Component {
             ref={c => this.autoComplete = c}
             fullWidth
             maxSearchResults={10}
-            filter={AutoComplete.caseInsensitiveFilter}
             dataSource={authors.filter(author => !selectedAuthors.includes(author))}
             onNewRequest={this.selectAuthor}
             floatingLabelText='Search author names'

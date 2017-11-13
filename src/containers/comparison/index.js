@@ -26,6 +26,7 @@ const mapStateToProps = state => ({
   completedSetup: completedSetup(state.comparison.setup),
   allAuthors: getAllAuthors(state.authors),
   loading: state.comparison.bank.loading,
+  loadingAuthors: state.authors.loading,
   data: state.comparison.bank.data,
   categories: getCategories(state.comparison.bank),
   series: getSeries(state.comparison.bank)
