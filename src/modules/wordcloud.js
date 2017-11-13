@@ -1,11 +1,12 @@
 import { CALL_API } from 'redux-api-middleware'
+import { wordcloud } from '../apis/cir'
 
 const FETCH_WORDCLOUD_REQUEST = 'FETCH_WORDCLOUD_REQUEST'
 const FETCH_WORDCLOUD_SUCCESS = 'FETCH_WORDCLOUD_SUCCESS'
 const FETCH_WORDCLOUD_FAILURE = 'FETCH_WORDCLOUD_FAILURE'
 
 const initialState = {
-  entities: [],
+  data: [],
   loading: true,
   error: false
 }
@@ -21,7 +22,7 @@ export default (state = initialState, action) => {
     case FETCH_WORDCLOUD_SUCCESS:
       return {
         ...state,
-        entities: action.payload.result,
+        data: action.payload.result,
         loading: false
       }
 
@@ -38,21 +39,19 @@ export default (state = initialState, action) => {
 
 // Selector
 export const getGraphData = (state = initialState) => {
-  const { entities } = state
-  const data = entities.map(entity => {
+  const { data } = state
+  return data.map(entity => {
     const key = Object.keys(entity)[0]
     return {
       text: key,
       value: entity[key]
     }
   })
-
-  return data
 }
 
-export const fetchWords = (resource) => ({
+export const fetchWords = (author) => ({
   [CALL_API]: {
-    endpoint: 'http://localhost:5000',
+    endpoint: wordcloud(author),
     method: 'GET',
     types: [FETCH_WORDCLOUD_REQUEST, FETCH_WORDCLOUD_SUCCESS, FETCH_WORDCLOUD_FAILURE]
   }

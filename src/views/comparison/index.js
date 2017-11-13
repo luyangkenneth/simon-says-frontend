@@ -32,8 +32,12 @@ class Comparison extends Component {
           <Loader loading={loading}>
             <Multigraph
               type='line'
+              title={'Comparison between authors\'s publication count.'}
+              xTitle='Year'
               xValues={categories}
               yValues={series}
+              yTitle='Publications'
+              legend={true}
             />
           </Loader> :
           <Loader loading={loadingAuthors}>

@@ -121,6 +121,13 @@ export const publications = publication_id => {
 }
 
 /**
+ * Get the frequency wordcloud for a specific author.
+ */
+export const wordCloud = author => {
+  return buildUrl('word_cloud', { author })
+}
+
+/**
  * (HELPER)
  * Build a API query URL to the backend.
  *

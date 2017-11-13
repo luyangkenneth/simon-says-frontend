@@ -38,7 +38,7 @@ const App = () => (
         component={getTrendView(
           'publications',
           'year',
-          'Top 5 Publications Ranked by Citations'
+          'Publication trend over time'
         )}
       />
       <Route
@@ -46,7 +46,7 @@ const App = () => (
         component={getTrendView(
           'citations',
           'year',
-          'Top 10 Authors Ranked by Publications'
+          'Citation trend over time'
         )}
       />
       <Route

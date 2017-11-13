@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
+
+import Loader from '../../components/loader'
 import Multigraph from '../../components/multigraph'
 import SliderYear from '../rank/slider-year'
 import SearchbarAuthor from './searchbar-author'
+import SearchVenue from './search-venue'
 
 import './styles.scss'
 
@@ -13,6 +16,7 @@ import './styles.scss'
 class Trend extends Component {
   componentDidMount() {
     this.loadAuthors()
+    this.loadVenues()
     this.loadData()
   }
 
@@ -20,6 +24,9 @@ class Trend extends Component {
     const {
       resource,
       authors,
+      venues,
+      loading,
+      venuesLoading,
       authorsLoading,
       categories,
       filters,
@@ -35,28 +42,39 @@ class Trend extends Component {
     return (
       <div>
         <Container fluid={true}>
-          <Row style={{ minHeight: '10em' }}>
-            <Col xs={12}>
-              <Multigraph
-                type='line'
-                title={title}
-                xTitle={resource}
-                xValues={categories}
-                yTitle={'count'}
-                yValues={yValues}
-                onClickSeries={this.onClickSeries}
-              />
-            </Col>
-          </Row>
+          <Loader loading={loading || authorsLoading || venuesLoading}>
+            <Row style={{ minHeight: '10em' }}>
+              <Col xs={12}>
+                <Multigraph
+                  type='line'
+                  title={title}
+                  xTitle={resource}
+                  xValues={categories}
+                  yTitle={'count'}
+                  yValues={yValues}
+                  onClickSeries={this.onClickSeries}
+                />
+              </Col>
+            </Row>
+          </Loader>
         </Container>
+        {authorsLoading ? null :
         <Container>
           <Row>
-            <Col xs={12} className='mb-4'>
+            <Col xs={6} className='mb-4'>
               <SearchbarAuthor
-                authors={authorsLoading ? [] : authors}
-                onChange={_ => {}}
+                authors={authors}
                 onConfirm={val => {
                   updateFilter('author', val)
+                  this.loadData()
+                }}
+              />
+            </Col>
+            <Col xs={6} className='mb-4'>
+              <SearchVenue
+                venues={venues}
+                onConfirm={val => {
+                  updateFilter('venue', val)
                   this.loadData()
                 }}
               />
@@ -66,14 +84,13 @@ class Trend extends Component {
             <Col xs={6}>
               <SliderYear
                 onChange={val => {updateFilter('year', val)}}
-                onAfterChange={val => { this.loadData() }}
                 yearRange={filters.year}
-                min={2000}
+                min={1990}
                 max={2017}
               />
             </Col>
           </Row>
-        </Container>
+        </Container>}
       </div>
     )
   }
@@ -84,9 +101,19 @@ class Trend extends Component {
 
   loadAuthors = () => {
     console.log('Loading authors...')
-    const { fetchAuthors } = this.props
-    fetchAuthors()
-   }
+    const { fetchAuthors, authors } = this.props
+    if (authors.length === 0) {
+      fetchAuthors()
+    }
+  }
+
+  loadVenues = () => {
+    console.log('Loading venues...')
+    const { fetchVenues, venues } = this.props
+    if (venues.length === 0) {
+      fetchVenues()
+    }
+  }
 
   loadData = () => {
     console.log('Loading data...')

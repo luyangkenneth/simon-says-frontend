@@ -16,7 +16,7 @@ const api = createAPIReducer('trend', {})
 const initialFilter = {
   author: undefined,
   venue: undefined,
-  year: [2000,2017]
+  year: [1990,2017]
 }
 
 const filtersReducer = (state = initialFilter, action) => {
@@ -41,9 +41,14 @@ export default combineReducers ({
 
 export const getGraphData = (state, categoryKey) => {
   const { data } = state.api
+  const { year } = state.filters
   const sorted = getSortedData(data)
-  const categories = sorted.map(item => item.year)
-  const series = sorted.map(item => item.count)
+  const categories = sorted 
+    .filter(item => (item.year >= year[0] && item.year <= year[1]))
+    .map(item => item.year)
+  const series = sorted
+    .filter(item => (item.year >= year[0] && item.year <= year[1]))
+    .map(item => item.count)
 
   return { categories, data: series }
 }

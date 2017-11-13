@@ -9,7 +9,8 @@ const Multigraph = ({
   yValues,
   yTitle,
   tooltipSuffix,
-  onClickSeries
+  onClickSeries,
+  legend = false
 }) => (
   <div>
     <ReactHighcharts
@@ -47,7 +48,7 @@ const Multigraph = ({
             }
           }
         },
-        legend: { enabled: false },
+        legend: { enabled: legend },
         credits: { enabled: false },
         series: yValues
       }}
