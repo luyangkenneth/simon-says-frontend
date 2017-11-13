@@ -184,8 +184,6 @@ export const selectedPublication = (entities, selection) => {
 // Actions
 export const fetchCitationWeb = (queryTitle, queryDepth) => {
   return (dispatch, getState) => {
-    const { maxDepth, title } = getState().citationWeb.queryReducer
-
     dispatch(changeMaxDepth(queryDepth))
     dispatch(changeTitle(queryTitle))
 

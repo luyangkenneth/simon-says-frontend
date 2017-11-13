@@ -30,7 +30,6 @@ class CitationWebView extends Component {
   render() {
     const {
       entities,
-      title,
       depth,
       titles,
       titlesLoading,
