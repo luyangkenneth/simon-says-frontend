@@ -88,7 +88,7 @@ class CitationWebView extends Component {
                 />
             </Col>
             <Col lg={6} className='my-auto'>
-              {!publicationsLoading && Object.keys(selected).length > 0 ?
+              {!publicationsLoading && selected && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
                   title={selected.title}
