@@ -70,7 +70,7 @@ class CitationWebView extends Component {
               <h4>Depth of web: {depth}</h4>
               <Slider
                 min={1}
-                max={3}
+                max={5}
                 step={1}
                 defaultValue={2}
                 value={depth}
