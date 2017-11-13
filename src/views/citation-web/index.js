@@ -4,17 +4,18 @@ import {
   Row,
   Col,
 } from 'reactstrap'
-import {
-  AutoComplete,
-  Slider
-} from 'material-ui'
-import { CircleLoader } from 'react-spinners'
+import { AutoComplete } from 'material-ui'
+import Slider, { createSliderWithTooltip } from 'rc-slider'
+
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
 import Loader from '../../components/loader'
 import HoverPaper from '../../components/hover-paper'
 
 import './styles.css'
+
+const TooltipSlider = createSliderWithTooltip(Slider)
+
 
 class CitationWebView extends Component {
   componentDidMount() {
@@ -46,17 +47,17 @@ class CitationWebView extends Component {
       width: 500,
       animate: true,
       strength: {
-        x: -0.001,
-        y: -0.001
+        x: -0.06,
+        y: -0.06
       }
     }
 
     return (
       <div>
         <Container>
-          <Row>
+          <Row className='mb-5'>
             <Col lg={6}>
-              <HoverPaper className='p-4'>
+              <HoverPaper className='p-3'>
                 <AutoComplete
                   dataSource={titlesLoading ? [] : titles}
                   filter={AutoComplete.caseInsensitiveFilter}
@@ -73,7 +74,7 @@ class CitationWebView extends Component {
             <Col lg={6}>
               <HoverPaper className='p-4'>
                 <p>Depth of web: <span className='text-primary'>{depth}</span></p>
-                <Slider
+                <TooltipSlider
                   min={1}
                   max={5}
                   step={1}
@@ -165,7 +166,7 @@ class CitationWebView extends Component {
   /**
    * Fetch data for depth change
    */
-  handleSliderChange = (event, newValue) => {
+  handleSliderChange = (newValue) => {
     const { fetchCitationWeb, resetSelectedPublication, title } = this.props
 
     resetSelectedPublication()
