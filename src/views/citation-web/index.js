@@ -84,12 +84,8 @@ class CitationWebView extends Component {
           <h4>Citation Web</h4>
           <Row className='mb-3'>
             <Col lg={6}>
-              {citationLoading
-                ?
-                  <div>
-                    <Loader loading={citationLoading}></Loader>
-                  </div>
-                : <CitationWeb
+              <Loader loading={citationLoading}>
+                <CitationWeb
                   zoom
                   simulationOptions={simulationOptions}
                   onSelectNode={this.showPublication}
@@ -97,9 +93,9 @@ class CitationWebView extends Component {
                   defaultSelectedNode={this.defaultNode()}
                   data={entities}
                   />
-              }
+              </Loader>
             </Col>
-            <Col lg={6} className='my-auto '>
+            <Col lg={6} className='my-auto'>
               {!publicationsLoading && selected && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
