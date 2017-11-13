@@ -14,7 +14,7 @@ const Pills = ({
       <Chip
         key={uuidv4()}
         style={{ margin: 4 }}
-        onRequestDelete={onDelete}
+        onRequestDelete={onDelete(author)}
       >
         {author}
       </Chip>

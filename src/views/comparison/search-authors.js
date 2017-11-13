@@ -9,12 +9,15 @@ import Pills from './pills'
  */
 class SearchAuthors extends Component {
   render() {
-    const { selectedAuthors, authors } = this.props
+    const { selectedAuthors, authors, setAuthors } = this.props
 
     return (
       <div>
         <Pills
           selected={selectedAuthors}
+          onDelete={value => () => {
+            setAuthors(selectedAuthors.filter(author => author !== value))
+          }}
         />
         <HoverPaper className='p-4'>
           <AutoComplete
