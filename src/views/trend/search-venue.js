@@ -4,7 +4,7 @@ import AutoComplete from 'material-ui/AutoComplete'
 import HoverPaper from '../../components/hover-paper'
 
 const SearchbarAuthor = ({
-  authors,
+  venues,
   onChange,
   onConfirm
 }) => (
@@ -14,10 +14,10 @@ const SearchbarAuthor = ({
         fullWidth
         maxSearchResults={10}
         filter={AutoComplete.caseInsensitiveFilter}
-        dataSource={authors}
+        dataSource={venues}
         onUpdateInput={onChange}
         onNewRequest={onConfirm}
-        floatingLabelText='Search by Author'
+        floatingLabelText='Search by Venue'
       />
     </HoverPaper>
   </div>

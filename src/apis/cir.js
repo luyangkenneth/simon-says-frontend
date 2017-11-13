@@ -8,7 +8,7 @@
 
 import { stringify } from 'query-string'
 
-const BASE_URL = 'https://simon-says-backend.herokuapp.com/api'
+const BASE_URL = 'http://localhost:3001/api'
 const TOP_AUTHORS_BY_PUBLICATIONS = 'top_authors_by_num_publications'
 const TOP_PUBLICATIONS_BY_CITATIONS = 'top_publications_by_num_citations'
 const PUBLICATIONS_BY_YEAR = 'num_publications_by_year'
@@ -118,6 +118,13 @@ export const venues = () => buildUrl(VENUES)
  */
 export const publications = publication_id => {
   return buildUrl(`${PUBLICATIONS}/${publication_id}`)
+}
+
+/**
+ * Get the frequency wordcloud for a specific author.
+ */
+export const wordCloud = author => {
+  return buildUrl('word_cloud', { author })
 }
 
 /**

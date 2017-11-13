@@ -7,11 +7,6 @@ import { Container } from 'reactstrap'
 import './styles.scss'
 
 class Wordcloud extends Component {
-  componentDidMount() {
-    const { fetchWords, resource } = this.props
-    const data = fetchWords(resource)
-  }
-
   render() {
     const { series, title } = this.props
     const count = series.map(d => d.value)

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 
 import Multigraph from '../../components/multigraph'
+import Loader from '../../components/loader'
 import SliderCohort from './slider-cohort'
 import SliderYear from './slider-year'
 import SearchbarVenue from './searchbar-venue'
@@ -29,6 +30,7 @@ class Rank extends Component {
       title,
       series,
       venues,
+      loading,
       updateFilter
     } = this.props
 
@@ -40,19 +42,21 @@ class Rank extends Component {
     return (
       <div>
         <Container fluid={true}>
-          <Row style={{ minHeight: '10em' }}>
-            <Col xs={12}>
-              <Multigraph
-                type='bar'
-                title={title(filters.cohort)}
-                xTitle={resource}
-                xValues={categories}
-                yValues={yValues}
-                yTitle={'count'}
-                onClickSeries={this.onClickSeries}
-              />
-            </Col>
-          </Row>
+          <Loader loading={loading}>
+            <Row>
+              <Col xs={12}>
+                <Multigraph
+                  type='bar'
+                  title={title(filters.cohort)}
+                  xTitle={resource}
+                  xValues={categories}
+                  yValues={yValues}
+                  yTitle={'count'}
+                  onClickSeries={this.onClickSeries}
+                />
+              </Col>
+            </Row>
+          </Loader>
         </Container>
         <Container>
           <Row>
@@ -61,30 +65,30 @@ class Rank extends Component {
                 conferences={venues}
                 onChange={val => { updateFilter('venue', val) }}
                 onConfirm={() => { this.loadData() }}
-              />
-            </Col>
-          </Row>
+                />
+              </Col>
+            </Row>
 
-          <Row>
-            <Col xs={6}>
-              <SliderYear
-                onChange={val => { updateFilter('year', val) }}
-                onAfterChange={val => { this.loadData() }}
-                yearRange={filters.year}
-                min={2000}
-                max={2017}
-              />
-            </Col>
-            <Col xs={6}>
-              <SliderCohort
-                resource={resource}
-                onChange={val => { updateFilter('cohort', val) }}
-                onAfterChange={val => { this.loadData() }}
-                cohortValue={filters.cohort}
-              />
-            </Col>
-          </Row>
-        </Container>
+            <Row>
+              <Col xs={6}>
+                <SliderYear
+                  onChange={val => { updateFilter('year', val) }}
+                  onAfterChange={val => { this.loadData() }}
+                  yearRange={filters.year}
+                  min={2000}
+                  max={2017}
+                  />
+                </Col>
+                <Col xs={6}>
+                  <SliderCohort
+                    resource={resource}
+                    onChange={val => { updateFilter('cohort', val) }}
+                    onAfterChange={val => { this.loadData() }}
+                    cohortValue={filters.cohort}
+                    />
+                  </Col>
+                </Row>
+              </Container>
       </div>
     )
   }

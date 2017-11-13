@@ -30,10 +30,10 @@ const Header = () => (
               <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/rank/publications">Top Publications</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/publications">Publication Trends</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/publications">Publication Trend</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/citations">Citation Trends</NavLink>
+              <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/trend/citations">Citation Trend</NavLink>
             </NavItem>
             <NavItem>
               <NavLink activeClassName='cir__header_active-nav' tag={Link} to="/web">Citation Web</NavLink>
