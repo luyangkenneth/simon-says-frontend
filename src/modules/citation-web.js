@@ -186,20 +186,16 @@ export const fetchCitationWeb = (queryTitle, queryDepth) => {
   return (dispatch, getState) => {
     const { maxDepth, title } = getState().citationWeb.queryReducer
 
-    if (queryTitle !== title || queryDepth > maxDepth) {
-      // update states
-      // call API
-      dispatch(changeMaxDepth(queryDepth))
-      dispatch(changeTitle(queryTitle))
+    dispatch(changeMaxDepth(queryDepth))
+    dispatch(changeTitle(queryTitle))
 
-      dispatch({
-        [CALL_API]: {
-          endpoint: citationWeb(queryTitle, queryDepth),
-          method: 'GET',
-          types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
-        }
-      })
-    }
+    dispatch({
+      [CALL_API]: {
+        endpoint: citationWeb(queryTitle, queryDepth),
+        method: 'GET',
+        types: [FETCH_WEB_REQUEST, FETCH_WEB_SUCCESS, FETCH_WEB_FAILURE]
+      }
+    })
 
     dispatch(changeDepth(queryDepth))
   }
