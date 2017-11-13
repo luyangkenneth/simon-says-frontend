@@ -49,6 +49,10 @@ function getGraphNodes(data) {
 
   const inCitationLength = pubIds.map(id => data[id].inCitations.length)
 
+  const colorScale = scaleLinear()
+      .domain([Math.min(...inCitationLength), Math.max(...inCitationLength)])
+      .range(['#EBEEF2', '#274C77'])
+
   const radiusScale = scaleLinear()
     .domain([Math.min(...inCitationLength), Math.max(...inCitationLength)])
     .range([10, 20])
@@ -56,7 +60,7 @@ function getGraphNodes(data) {
   return pubIds.map(id => (
     <ForceGraphNode
       key={id}
-      fill={'#777777'}
+      fill={colorScale(data[id].inCitations.length)}
       node={{
         id: id,
         radius: radiusScale(data[id].inCitations.length),

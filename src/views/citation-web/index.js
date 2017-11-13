@@ -4,15 +4,18 @@ import {
   Row,
   Col,
 } from 'reactstrap'
-import {
-  AutoComplete,
-  Slider
-} from 'material-ui'
-import { CircleLoader } from 'react-spinners'
+import { AutoComplete } from 'material-ui'
+import Slider, { createSliderWithTooltip } from 'rc-slider'
+
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
+import Loader from '../../components/loader'
+import HoverPaper from '../../components/hover-paper'
 
 import './styles.css'
+
+const TooltipSlider = createSliderWithTooltip(Slider)
+
 
 class CitationWebView extends Component {
   componentDidMount() {
@@ -43,61 +46,58 @@ class CitationWebView extends Component {
       width: 500,
       animate: true,
       strength: {
-        x: -0.001,
-        y: -0.001
+        x: -0.06,
+        y: -0.06
       }
     }
 
     return (
       <div>
         <Container>
-          <Row>
+          <Row className='mb-5'>
             <Col lg={6}>
-              <AutoComplete
-                dataSource={titlesLoading ? [] : titles}
-                filter={AutoComplete.caseInsensitiveFilter}
-                onNewRequest={this.handleNewRequest}
-                hintText={'Search by title'}
-                floatingLabelText={'Search by title'}
-                maxSearchResults={10}
-                fullWidth={true}
-                animated={false}
-                disableFocusRipple={false}
-                />
+              <HoverPaper className='p-3'>
+                <AutoComplete
+                  dataSource={titlesLoading ? [] : titles}
+                  filter={AutoComplete.caseInsensitiveFilter}
+                  onNewRequest={this.handleNewRequest}
+                  hintText={'Search by title'}
+                  floatingLabelText={'Search by title'}
+                  maxSearchResults={10}
+                  fullWidth={true}
+                  animated={false}
+                  disableFocusRipple={false}
+                  />
+              </HoverPaper>
             </Col>
             <Col lg={6}>
-              <h4>Depth of web: {depth}</h4>
-              <Slider
-                min={1}
-                max={5}
-                step={1}
-                defaultValue={2}
-                value={depth}
-                onChange={this.handleSliderChange}
-                />
+              <HoverPaper className='p-4'>
+                <p>Depth of web: <span className='text-primary'>{depth}</span></p>
+                <TooltipSlider
+                  min={1}
+                  max={5}
+                  step={1}
+                  defaultValue={2}
+                  value={depth}
+                  onChange={this.handleSliderChange}
+                  />
+              </HoverPaper>
             </Col>
           </Row>
-          <h4>Citation Web</h4>
           <Row className='mb-3'>
             <Col lg={6}>
-              {citationLoading
-                ?
-                  <div>
-                    <CircleLoader
-                      color='#123abc'
-                      size={100}
-                    />
-                  </div>
-                : <CitationWeb
+              <Loader loading={citationLoading}>
+                <CitationWeb
                   zoom
                   simulationOptions={simulationOptions}
                   onSelectNode={this.showPublication}
                   onDeselectNode={this.hidePublication}
+                  defaultSelectedNode={this.defaultNode()}
                   data={entities}
                   />
-              }
+              </Loader>
             </Col>
-            <Col lg={6} className='my-auto '>
+            <Col lg={6} className='my-auto'>
               {!publicationsLoading && selected && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
@@ -165,11 +165,27 @@ class CitationWebView extends Component {
   /**
    * Fetch data for depth change
    */
-  handleSliderChange = (event, newValue) => {
+  handleSliderChange = (newValue) => {
     const { fetchCitationWeb, resetSelectedPublication, title } = this.props
 
     resetSelectedPublication()
     fetchCitationWeb(title, newValue)
+  }
+
+  /**
+   * Returns the query publication node id for default selection
+   */
+  defaultNode = () => {
+    const { entities, title } = this.props
+    const pub_ids = Object.keys(entities)
+
+    const res = pub_ids.filter(id => entities[id].title === title)
+
+    if (pub_ids.length > 0) {
+      return { id: pub_ids[0] }
+    } else {
+      return { id: '' }
+    }
   }
 }
 
