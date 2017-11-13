@@ -262,7 +262,5 @@ const changeTitle = (title) => {
 const getPublicationId = publication => (publication['publication_id'])
 
 const makePresentable = titles => {
-  return titles.map(title => title.trim())
-    .map(title => title.replace(/[\n|\t|\r| ]+/, ' '))
-    .sort()
+    return titles.sort()
 }
