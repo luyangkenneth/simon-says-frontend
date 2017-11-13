@@ -167,8 +167,9 @@ class CitationWebView extends Component {
    * Fetch data for depth change
    */
   handleSliderChange = (event, newValue) => {
-    const { fetchCitationWeb, title } = this.props
+    const { fetchCitationWeb, resetSelectedPublication, title } = this.props
 
+    resetSelectedPublication()
     fetchCitationWeb(title, newValue)
   }
 }
