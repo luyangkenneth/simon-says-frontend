@@ -8,6 +8,7 @@ import {
   AutoComplete,
   Slider
 } from 'material-ui'
+import { CircleLoader } from 'react-spinners'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
 
@@ -16,11 +17,14 @@ import './styles.css'
 class CitationWebView extends Component {
   componentDidMount() {
     const { fetchCitationWeb, fetchPublicationTitles } = this.props
-    const { depth } = this.props
-    const initialTitle = 'Dynamic Power Management for the Iterative Decoding of Turbo Codes'
+    const { depth, titles } = this.props
+    const initialTitle = 'Low-density parity check codes over GF(q)'
 
     fetchCitationWeb(initialTitle, depth)
-    fetchPublicationTitles()
+
+    if (titles.length === 0) {
+      fetchPublicationTitles()
+    }
   }
 
   render() {
@@ -52,12 +56,14 @@ class CitationWebView extends Component {
             <Col lg={6}>
               <AutoComplete
                 dataSource={titlesLoading ? [] : titles}
-                filter={AutoComplete.fuzzyFilter}
+                filter={AutoComplete.caseInsensitiveFilter}
                 onNewRequest={this.handleNewRequest}
                 hintText={'Search by title'}
                 floatingLabelText={'Search by title'}
                 maxSearchResults={10}
                 fullWidth={true}
+                animated={false}
+                disableFocusRipple={false}
                 />
             </Col>
             <Col lg={6}>
@@ -73,20 +79,27 @@ class CitationWebView extends Component {
             </Col>
           </Row>
           <h4>Citation Web</h4>
-          <h5>{!citationLoading ? title : ''}</h5>
           <Row className='mb-3'>
             <Col lg={6}>
-              <CitationWeb
-                zoom
-                highlightDependencies
-                simulationOptions={simulationOptions}
-                onSelectNode={this.showPublication}
-                onDeselectNode={this.hidePublication}
-                data={entities}
-                />
+              {citationLoading
+                ?
+                  <div>
+                    <CircleLoader
+                      color='#123abc'
+                      size={100}
+                    />
+                  </div>
+                : <CitationWeb
+                  zoom
+                  simulationOptions={simulationOptions}
+                  onSelectNode={this.showPublication}
+                  onDeselectNode={this.hidePublication}
+                  data={entities}
+                  />
+              }
             </Col>
-            <Col lg={6} className='my-auto'>
-              {!publicationsLoading && Object.keys(selected).length > 0 ?
+            <Col lg={6} className='my-auto '>
+              {!publicationsLoading && selected && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
                   title={selected.title}
@@ -113,9 +126,13 @@ class CitationWebView extends Component {
    * Shows a publication's detail given its node in the graph.
    */
   showPublication = (event, node) => {
-    const { selectPublication, fetchPublications } = this.props
-    fetchPublications(node.id)
+    const { selectPublication, fetchPublications, publications } = this.props
+
     selectPublication(node.id)
+
+    if (!(node.id in publications)) {
+      fetchPublications(node.id)
+    }
   }
 
   /**
@@ -130,7 +147,14 @@ class CitationWebView extends Component {
    * Fetch data for title change
    */
   handleNewRequest = (chosenRequest, index) => {
-    const { fetchCitationWeb, depth, titles } = this.props
+    const {
+      fetchCitationWeb,
+      resetSelectedPublication,
+      depth,
+      titles
+    } = this.props
+
+    resetSelectedPublication()
 
     if (!titles.includes(chosenRequest)) {
       return
@@ -143,8 +167,9 @@ class CitationWebView extends Component {
    * Fetch data for depth change
    */
   handleSliderChange = (event, newValue) => {
-    const { fetchCitationWeb, title } = this.props
+    const { fetchCitationWeb, resetSelectedPublication, title } = this.props
 
+    resetSelectedPublication()
     fetchCitationWeb(title, newValue)
   }
 }
