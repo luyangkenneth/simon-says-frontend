@@ -8,6 +8,7 @@ import {
   AutoComplete,
   Slider
 } from 'material-ui'
+import { CircleLoader } from 'react-spinners'
 import PublicationCard from '../../components/publication-card'
 import CitationWeb from '../../components/citation-web'
 
@@ -80,15 +81,24 @@ class CitationWebView extends Component {
           <h4>Citation Web</h4>
           <Row className='mb-3'>
             <Col lg={6}>
-              <CitationWeb
-                zoom
-                simulationOptions={simulationOptions}
-                onSelectNode={this.showPublication}
-                onDeselectNode={this.hidePublication}
-                data={citationLoading ? [] : entities}
-                />
+              {citationLoading
+                ?
+                  <div>
+                    <CircleLoader
+                      color='#123abc'
+                      size={100}
+                    />
+                  </div>
+                : <CitationWeb
+                  zoom
+                  simulationOptions={simulationOptions}
+                  onSelectNode={this.showPublication}
+                  onDeselectNode={this.hidePublication}
+                  data={entities}
+                  />
+              }
             </Col>
-            <Col lg={6} className='my-auto'>
+            <Col lg={6} className='my-auto '>
               {!publicationsLoading && selected && Object.keys(selected).length > 0 ?
                 <PublicationCard
                   className='cir__pub-card'
@@ -137,7 +147,6 @@ class CitationWebView extends Component {
    * Fetch data for title change
    */
   handleNewRequest = (chosenRequest, index) => {
-    console.log('handleNewRequest')
     const {
       fetchCitationWeb,
       resetSelectedPublication,
