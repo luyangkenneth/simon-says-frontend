@@ -1,5 +1,5 @@
 import { CALL_API } from 'redux-api-middleware'
-import { wordcloud } from '../apis/cir'
+import { wordCloud } from '../apis/cir'
 
 const FETCH_WORDCLOUD_REQUEST = 'FETCH_WORDCLOUD_REQUEST'
 const FETCH_WORDCLOUD_SUCCESS = 'FETCH_WORDCLOUD_SUCCESS'
@@ -51,7 +51,7 @@ export const getGraphData = (state = initialState) => {
 
 export const fetchWords = (author) => ({
   [CALL_API]: {
-    endpoint: wordcloud(author),
+    endpoint: wordCloud(author),
     method: 'GET',
     types: [FETCH_WORDCLOUD_REQUEST, FETCH_WORDCLOUD_SUCCESS, FETCH_WORDCLOUD_FAILURE]
   }
